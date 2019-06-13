@@ -1,15 +1,40 @@
 PODS:
-  - HHPGNetWork (0.1.0)
+  - Alamofire (4.8.2)
+  - HHPGNetWork (0.1.0):
+    - Alamofire
+    - Result
+    - RxCocoa
+    - RxSwift
+  - Result (5.0.0)
+  - RxCocoa (5.0.0):
+    - RxRelay (~> 5)
+    - RxSwift (~> 5)
+  - RxRelay (5.0.0):
+    - RxSwift (~> 5)
+  - RxSwift (5.0.0)
 
 DEPENDENCIES:
   - HHPGNetWork (from `../`)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Alamofire
+    - Result
+    - RxCocoa
+    - RxRelay
+    - RxSwift
 
 EXTERNAL SOURCES:
   HHPGNetWork:
     :path: "../"
 
 SPEC CHECKSUMS:
-  HHPGNetWork: 952af0cb421649b33a1fbf4ac02619f34791983f
+  Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
+  HHPGNetWork: 413d5a2a9cfaed27b6cd4a45006fb1c93f638837
+  Result: ed341d2f236af425b803e690e9bd8fd0a0cb7c5a
+  RxCocoa: fcf32050ac00d801f34a7f71d5e8e7f23026dcd8
+  RxRelay: 4f7409406a51a55cd88483f21ed898c234d60f18
+  RxSwift: 8b0671caa829a763bbce7271095859121cbd895f
 
 PODFILE CHECKSUM: 0f5a6a4ffb6293649eaa2254eaff69337151940d
 

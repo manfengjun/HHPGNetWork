@@ -31,10 +31,10 @@ TODO: RxSwift封装络请求封， 包含了网络请求，数据解析.
   s.ios.deployment_target = '8.0'
 
   s.source_files = 'HHPGNetWork/Classes/**/*'
-  s.dependency 'RxSwift', '~> 4.1.2'
-  s.dependency 'RxCocoa', '~> 4.1.2'
-  s.dependency 'Alamofire', '~> 4.7.0'
-  s.dependency 'Result', '~> 3.2.4'
+  s.dependency 'RxSwift'
+  s.dependency 'RxCocoa'
+  s.dependency 'Alamofire'
+  s.dependency 'Result'
   
   # s.resource_bundles = {
   #   'HHPGNetWork' => ['HHPGNetWork/Assets/*.png']

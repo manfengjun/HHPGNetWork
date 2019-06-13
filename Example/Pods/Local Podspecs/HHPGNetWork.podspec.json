@@ -1,15 +1,15 @@
 {
   "name": "HHPGNetWork",
   "version": "0.1.0",
-  "summary": "A short description of HHPGNetWork.",
-  "description": "TODO: Add long description of the pod here.",
+  "summary": "RxSwift & Alamofire 网络库",
+  "description": "TODO: RxSwift封装络请求封， 包含了网络请求，数据解析.",
   "homepage": "https://github.com/liufengjun/HHPGNetWork",
   "license": {
     "type": "MIT",
     "file": "LICENSE"
   },
   "authors": {
-    "liufengjun": "liufengjun@chinawutong.com"
+    "liufengjun": "2546863989@qq.com"
   },
   "source": {
     "git": "https://github.com/liufengjun/HHPGNetWork.git",
@@ -18,5 +18,19 @@
   "platforms": {
     "ios": "8.0"
   },
-  "source_files": "HHPGNetWork/Classes/**/*"
+  "source_files": "HHPGNetWork/Classes/**/*",
+  "dependencies": {
+    "RxSwift": [
+
+    ],
+    "RxCocoa": [
+
+    ],
+    "Alamofire": [
+
+    ],
+    "Result": [
+
+    ]
+  }
 }
