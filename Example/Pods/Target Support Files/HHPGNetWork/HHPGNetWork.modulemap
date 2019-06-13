@@ -1,0 +1,6 @@
+framework module HHPGNetWork {
+  umbrella header "HHPGNetWork-umbrella.h"
+
+  export *
+  module * { export * }
+}

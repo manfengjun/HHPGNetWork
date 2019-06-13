@@ -1,0 +1,22 @@
+{
+  "name": "HHPGNetWork",
+  "version": "0.1.0",
+  "summary": "A short description of HHPGNetWork.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/liufengjun/HHPGNetWork",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "liufengjun": "liufengjun@chinawutong.com"
+  },
+  "source": {
+    "git": "https://github.com/liufengjun/HHPGNetWork.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source_files": "HHPGNetWork/Classes/**/*"
+}

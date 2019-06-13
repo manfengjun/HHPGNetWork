@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'HHPGNetWork_Example' do
+  pod 'HHPGNetWork', :path => '../'
+
+  target 'HHPGNetWork_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
