@@ -18,19 +18,30 @@
   "platforms": {
     "ios": "8.0"
   },
-  "source_files": "HHPGNetWork/Classes/**/*",
   "dependencies": {
-    "RxSwift": [
+    "Moya": [
 
     ],
-    "RxCocoa": [
-
-    ],
-    "Alamofire": [
-
-    ],
-    "Result": [
+    "HandyJSON": [
 
     ]
-  }
+  },
+  "subspecs": [
+    {
+      "name": "Core",
+      "source_files": "HHPGNetWork/Classes/Core/**/*"
+    },
+    {
+      "name": "Rx",
+      "dependencies": {
+        "HHPGNetWork/Core": [
+
+        ],
+        "Moya/RxSwift": [
+
+        ]
+      },
+      "source_files": "HHPGNetWork/Classes/Rx/**/*"
+    }
+  ]
 }

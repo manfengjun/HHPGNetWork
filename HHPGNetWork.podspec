@@ -30,11 +30,19 @@ TODO: RxSwift封装络请求封， 包含了网络请求，数据解析.
 
   s.ios.deployment_target = '8.0'
 
-  s.source_files = 'HHPGNetWork/Classes/**/*'
-  s.dependency 'RxSwift'
-  s.dependency 'RxCocoa'
-  s.dependency 'Alamofire'
-  s.dependency 'Result'
+  # s.source_files = 'JJEx/Classes/**/*'
+  s.subspec 'Core' do |c|
+      c.source_files = 'HHPGNetWork/Classes/Core/**/*'
+  end
+  s.subspec 'Rx' do |r|
+      r.dependency "HHPGNetWork/Core"
+      r.dependency 'Moya/RxSwift'
+      r.source_files = 'HHPGNetWork/Classes/Rx/**/*'
+  end
+  
+  # s.source_files = 'HHPGNetWork/Classes/**/*'
+  s.dependency 'Moya'
+  s.dependency 'HandyJSON'
   
   # s.resource_bundles = {
   #   'HHPGNetWork' => ['HHPGNetWork/Assets/*.png']
