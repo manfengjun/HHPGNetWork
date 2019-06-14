@@ -6,7 +6,7 @@
 //  Copyright © 2018年 ios. All rights reserved.
 //
 import UIKit
-import Alamofire
+import Moya
 import HHPGNetWork
 enum Common {
     // MARK: - 获取地址三级分类数据
@@ -15,27 +15,31 @@ enum Common {
     
 }
 extension Common : SpiTarget {
-    var headers: HTTPHeaders? {
+    var path: String {
+        switch self {
+        case .getAllRegion: return "/searchPoetry"
+            
+        }
+    }
+    
+    var method: Moya.Method {
+        return .get
+    }
+    
+    var parameters: [String : Any]? {
+        switch self {
+        case .getAllRegion:
+            return ["name":"月"]
+            
+        }
+    }
+    
+    var headers: [String: String]? {
         return [:]
     }
     var baseURL: String {
         return "https://api.apiopen.top"
     }
-    var path: String {
-        switch self {
-        case .getAllRegion: return "/searchPoetry"
-        
-        }
-    }
-    var method: HTTPMethod {
-        return .get
-    }
-    var parameters: Parameters? {
-        switch self {
-        case .getAllRegion:
-            return ["name":"月"]
-        
-        }
-    }
+    
     
 }

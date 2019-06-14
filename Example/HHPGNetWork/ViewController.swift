@@ -23,7 +23,7 @@ class ViewController: UIViewController {
         // 日志
         setup_logger()
         // 请求示例
-        Spi(Common.getAllRegion).send().responseJSON { (response:DataResponse<Any>) in
+        Spi(Common.getAllRegion).send { (response) in
             switch response.result {
             case .success(let value):
                 print(value)
@@ -31,16 +31,6 @@ class ViewController: UIViewController {
                 print(error.handle().message)
             }
         }
-        
-        
-//        responseSpiObjects { (response:DataResponse<[AppInfo]>) in
-//            switch response.result {
-//            case .success(let value):
-//                print(value)
-//            case .failure(let error):
-//                print(error.handle().message)
-//            }
-//        }
     }
     
     /// 日志输出

@@ -19,9 +19,6 @@
     "ios": "8.0"
   },
   "dependencies": {
-    "Moya": [
-
-    ],
     "HandyJSON": [
 
     ]
@@ -29,19 +26,12 @@
   "subspecs": [
     {
       "name": "Core",
-      "source_files": "HHPGNetWork/Classes/Core/**/*"
-    },
-    {
-      "name": "Rx",
       "dependencies": {
-        "HHPGNetWork/Core": [
-
-        ],
         "Moya/RxSwift": [
 
         ]
       },
-      "source_files": "HHPGNetWork/Classes/Rx/**/*"
+      "source_files": "HHPGNetWork/Classes/Core/**/*"
     }
   ]
 }

@@ -21,7 +21,7 @@ extension DataRequest {
                 guard let value = value as? [String:Any] else {
                     return .failure(SpiError.responseSerializationFailed(reason: .dataLengthIsZero))
                 }
-                if let data = value[SpiManager.config.result_key.RESULT_DATA] {
+                if let data = value[SpiManager.config.result_key.data_key] {
                     return .success(data)
                 }
                 return .failure(SpiError.responseSerializationFailed(reason: .dataLengthIsZero))
@@ -67,10 +67,10 @@ extension DataRequest {
                 guard let value = value as? [String:Any] else {
                     return .failure(SpiError.responseSerializationFailed(reason: .dataLengthIsZero))
                 }
-                if let value = value[SpiManager.config.result_key.RESULT_DATA] as? T {
+                if let value = value[SpiManager.config.result_key.data_key] as? T {
                     return .success(value)
                 } else {
-                    guard let object = value[SpiManager.config.result_key.RESULT_DATA] as? [String:Any] else {
+                    guard let object = value[SpiManager.config.result_key.data_key] as? [String:Any] else {
                         return .failure(SpiError.responseSerializationFailed(reason: .dataLengthIsZero))
                     }
                     if let path = designatedPath,path.count > 0 {
@@ -121,10 +121,10 @@ extension DataRequest {
                 guard let value = value as? [String:Any] else {
                     return .failure(SpiError.responseSerializationFailed(reason: .dataLengthIsZero))
                 }
-                if let value = value[SpiManager.config.result_key.RESULT_DATA] as? [T] {
+                if let value = value[SpiManager.config.result_key.data_key] as? [T] {
                     return .success(value)
                 } else {
-                    guard let data = value[SpiManager.config.result_key.RESULT_DATA] else {
+                    guard let data = value[SpiManager.config.result_key.data_key] else {
                         return .failure(SpiError.responseSerializationFailed(reason: .dataLengthIsZero))
                     }
                     if let path = designatedPath,path.count > 0 {
@@ -192,13 +192,13 @@ extension Request {
             guard let json = jsonData as? [String:Any] else {
                 return .failure(SpiError.responseSerializationFailed(reason: .jsonIsNotADictionary))
             }
-            if let status = json[SpiManager.config.result_key.RESULT_CODE] as? Int, (status == SpiManager.config.result_key.RESULT_SUCCESS){
+            if let status = json[SpiManager.config.result_key.code_key] as? Int, (status == SpiManager.config.result_key.success_key){
                 return .success(json)
             } else {
-                guard let status = json[SpiManager.config.result_key.RESULT_CODE] as? Int else{
+                guard let status = json[SpiManager.config.result_key.code_key] as? Int else{
                     return .failure(SpiError.executeFailed(reason: .unlegal))
                 }
-                return .failure(SpiError.executeFailed(reason: .executeFail(code: status, msg: json[SpiManager.config.result_key.RESULT_MSG] as? String)))
+                return .failure(SpiError.executeFailed(reason: .executeFail(code: status, msg: json[SpiManager.config.result_key.msg_key] as? String)))
             }
             
         } catch {

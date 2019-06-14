@@ -4,18 +4,9 @@ PODS:
   - HHPGNetWork (0.1.0):
     - HandyJSON
     - HHPGNetWork/Core (= 0.1.0)
-    - HHPGNetWork/Rx (= 0.1.0)
-    - Moya
   - HHPGNetWork/Core (0.1.0):
     - HandyJSON
-    - Moya
-  - HHPGNetWork/Rx (0.1.0):
-    - HandyJSON
-    - HHPGNetWork/Core
-    - Moya
     - Moya/RxSwift
-  - Moya (13.0.1):
-    - Moya/Core (= 13.0.1)
   - Moya/Core (13.0.1):
     - Alamofire (~> 4.1)
     - Result (~> 4.1)
@@ -43,11 +34,11 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
   HandyJSON: 992f2d661716d6a91de82d0056927bc7813b5770
-  HHPGNetWork: c25d99522935679b7512eed471330a07a5676a4d
+  HHPGNetWork: 2bbf230f8dea55583e7afef273976ead97695dcd
   Moya: f4a4b80ff2f8a4ffc208dfb31cd91636622fee6e
   Result: bd966fac789cc6c1563440b348ab2598cc24d5c7
   RxSwift: f172070dfd1a93d70a9ab97a5a01166206e1c575
 
 PODFILE CHECKSUM: 0f5a6a4ffb6293649eaa2254eaff69337151940d
 
-COCOAPODS: 1.6.1
+COCOAPODS: 1.7.2

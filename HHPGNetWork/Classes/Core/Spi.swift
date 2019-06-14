@@ -31,10 +31,10 @@ public class Spi: NSObject {
 
     }
     //MARK: - 网络事件操作
-    @discardableResult
-    public func send() -> MoyaProvider<Spi> {
+    
+    public func send(completion: @escaping Completion) {
         let provider = asProvider()
-        return provider
+        provider.request(self, completion: completion)
     }
 }
 extension Spi: TargetType {
