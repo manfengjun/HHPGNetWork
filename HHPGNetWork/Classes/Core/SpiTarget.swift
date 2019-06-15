@@ -30,6 +30,9 @@ public protocol SpiTarget {
     /// 是否允许蜂窝数据网络连接，默认返回 Bat 中配置的静态变量
     var allowsCellularAccess: Bool { get }
     
+    /// 日志输出
+    var logEnable: Bool { get }
+    
 }
 
 // MARK: - extensions
@@ -56,6 +59,10 @@ extension SpiTarget {
     
     public var startImmediately: Bool {
         return SpiManager.config.startImmediately ?? true
+    }
+    
+    public var logEnable: Bool {
+        return SpiManager.config.logEnable
     }
 }
 

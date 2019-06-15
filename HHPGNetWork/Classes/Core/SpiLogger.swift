@@ -6,63 +6,56 @@
 //
 
 import UIKit
-
-public class SpiLogger {
-    /// 输出信息
-    ///
-    /// - Parameters:
-    ///   - userInfo:
-    ///   - name:
-    public static func outStream(_ userInfo: [AnyHashable: Any]?, name: NSNotification.Name?) {
-        switch name {
-        case Notification.Name.Task.DidResume:
-            self.outRequest(userInfo: userInfo)
-        case Notification.Name.Task.DidSuspend:
-            self.outRequest(userInfo: userInfo)
-        case Notification.Name.Task.DidCancel:
-            self.outRequest(userInfo: userInfo)
-        case Notification.Name.Task.DidComplete:
-            self.outResponse(userInfo: userInfo)
-        default:
-            break
+import Moya
+public class SpiLogger: PluginType {
+    var logEnable : Bool = false
+    
+    public func willSend(_ request: RequestType, target: TargetType) {
+        if !SpiManager.config.logEnable && !logEnable {
+            return
+        }
+        let netRequest = request.request
+        if let url = netRequest?.description {
+            print("✅ " + url)
+        }
+        if let httpMethod = netRequest?.httpMethod {
+            print("\t METHOD:\(httpMethod)")
+        }
+        if let body = netRequest?.httpBody, let output = String(data: body, encoding: .utf8) {
+            print("\t Body:\(output)")
         }
     }
-    
-    public static func outRequest(userInfo: [AnyHashable: Any]?) {
-        if let task = userInfo?[Notification.Key.Task] as? URLSessionTask {
-            let netRequest = task.originalRequest?.urlRequest
-            if let url = netRequest?.description {
-                print("✅ " + url)
-            }
-            if let httpMethod = netRequest?.httpMethod {
-                print("\t METHOD:\(httpMethod)")
-            }
-            if let body = netRequest?.httpBody, let output = String(data: body, encoding: .utf8) {
-                print("\t Body:\(output)")
-            }
+    public func didReceive(_ result: Result<Response, MoyaError>, target: TargetType) {
+        if !SpiManager.config.logEnable && !logEnable {
+            return
         }
-    }
-    
-    public static func outResponse(userInfo: [AnyHashable: Any]?) {
-        var request_url = ""
-        if let task = userInfo?[Notification.Key.Task] as? URLSessionTask {
-            let netRequest = task.originalRequest?.urlRequest
-            if let url = netRequest?.description {
-                request_url = url
-            }
-        }
-        if let response = userInfo?[Notification.Key.ResponseData] as? Data {
-            if let data = response.xToJson() {
-                print("🇨🇳 \(request_url)")
+        switch result {
+        case .success(let response):
+            let request_url = target.baseURL.appendingPathComponent(target.path)
+            print("🇨🇳 \(request_url)")
+            if let data = response.data.xToJson() {
                 print("🇨🇳 Return Data:")
                 print("🇨🇳 \(data)")
-            } else {
-                print("❌ Can not formatter data")
             }
+            else {
+                print("❌ Can not formatter data")
+
+            }
+        case .failure(let error):
+            print("❌ \(error.errorDescription ?? "无错误描述")")
         }
     }
 }
-
+extension MoyaProvider {
+    
+    var log : MoyaProvider {
+        if let plugin = plugins.first(where: {type(of: $0) == SpiLogger.self}) as? SpiLogger {
+            plugin.logEnable = true
+        }
+        return self
+    }
+    
+}
 private extension Data {
     static func JSONString(from json: Any?) -> String? {
         guard let json = json else {

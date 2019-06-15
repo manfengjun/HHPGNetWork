@@ -25,6 +25,7 @@ public class SpiManager {
         public static var allowsCellucerAccess: Bool?
         public static var timeoutInterval: TimeInterval?
         public static var result_key: SpiRegKey = SpiRegKey()
+        public static var logEnable: Bool = true
         
         /// 静态方法，设置 Bat 全局配置
         public static func setConfig(baseUrls: [String] = [],
@@ -32,12 +33,14 @@ public class SpiManager {
                                      startImmediately: Bool = true,
                                      allowsCellucerAccess: Bool = true,
                                      timeoutInterval: TimeInterval = 60,
-                                     result_key: SpiRegKey? = nil) {
+                                     result_key: SpiRegKey? = nil,
+                                     logEnable: Bool = true) {
             self.baseUrls = baseUrls
             self.httpHeaders = httpHeaders
             self.startImmediately = startImmediately
             self.allowsCellucerAccess = allowsCellucerAccess
             self.timeoutInterval = timeoutInterval
+            self.logEnable = logEnable
             if let resultKey = result_key {
                 self.result_key = resultKey
             }

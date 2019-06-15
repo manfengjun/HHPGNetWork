@@ -17,7 +17,7 @@ enum Common {
 extension Common : SpiTarget {
     var path: String {
         switch self {
-        case .getAllRegion: return "/searchPoetry"
+        case .getAllRegion: return "/satinApi"
             
         }
     }
@@ -29,7 +29,7 @@ extension Common : SpiTarget {
     var parameters: [String : Any]? {
         switch self {
         case .getAllRegion:
-            return ["name":"月"]
+            return ["type":1,"page":1]
             
         }
     }
@@ -38,7 +38,7 @@ extension Common : SpiTarget {
         return [:]
     }
     var baseURL: String {
-        return "https://api.apiopen.top"
+        return "https://www.apiopen.top"
     }
     
     

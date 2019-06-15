@@ -11,40 +11,32 @@ import Alamofire
 import HHPGNetWork
 
 class ViewController: UIViewController {
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         // 初始化 网络库设置
         SpiManager.config.setConfig(baseUrls: ["https://api.apiopen.top"],
                                     result_key: SpiRegKey(code: "code",
                                                           msg: "message",
-                                                          data: "result",
+                                                          data: "data",
                                                           success: 200))
-        // 日志
-        setup_logger()
         // 请求示例
         Spi(Common.getAllRegion).send { (response) in
             switch response.result {
             case .success(let value):
-                print(value)
+                do {
+                    let repos = try value.mapSpiObjects(AppInfo.self)
+                    print(repos.count)
+                    print(repos[0].toJSONString())
+                } catch(let error) {
+                    print(error.localizedDescription)
+                }
             case .failure(let error):
                 print(error.handle().message)
             }
         }
     }
     
-    /// 日志输出
-    func setup_logger() {
-        // 请求日志输出
-        NotificationCenter.default.addObserver(forName: Notification.Name.Task.DidResume, object: nil, queue: nil) { (notification) in
-            SpiLogger.outStream(notification.userInfo, name: Notification.Name.Task.DidResume)
-        }
-        // 数据返回日志输出
-        NotificationCenter.default.addObserver(forName: Notification.Name.Task.DidComplete, object: nil, queue: nil) { (notification) in
-            SpiLogger.outStream(notification.userInfo, name: Notification.Name.Task.DidComplete)
-        }
-        
-    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

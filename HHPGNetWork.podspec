@@ -43,7 +43,7 @@ TODO: RxSwift封装络请求封， 包含了网络请求，数据解析.
   
   # s.source_files = 'HHPGNetWork/Classes/**/*'
   s.dependency 'HandyJSON'
-  
+
   # s.resource_bundles = {
   #   'HHPGNetWork' => ['HHPGNetWork/Assets/*.png']
   # }

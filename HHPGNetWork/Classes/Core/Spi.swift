@@ -26,14 +26,15 @@ public class Spi: NSObject {
                 return
             }
         }
-        let provider = MoyaProvider<Spi>(requestClosure: requestClosure)
+        
+        let provider = MoyaProvider<Spi>(requestClosure: requestClosure, plugins: [SpiLogger()])
         return provider
 
     }
     //MARK: - 网络事件操作
     
     public func send(completion: @escaping Completion) {
-        let provider = asProvider()
+        let provider = target.logEnable ? asProvider().log : asProvider()
         provider.request(self, completion: completion)
     }
 }

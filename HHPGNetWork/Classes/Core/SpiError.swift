@@ -264,7 +264,7 @@ extension SpiError.ExecuteFailureReason: LocalizedError {
             }
             return msg
         case .unlegal:
-            return "操作异常，请稍后重试"
+            return "执行结果状态码不合理"
         }
     }
 }
