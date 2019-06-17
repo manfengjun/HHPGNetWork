@@ -24,9 +24,8 @@ class ViewController: UIViewController {
             switch response.result {
             case .success(let value):
                 do {
-                    let repos = try value.mapSpiObjects(AppInfo.self)
-                    print(repos.count)
-                    print(repos[0].toJSONString())
+                    let repos = try value.mapJSON()
+//                    print(repos[0].toJSONString())
                 } catch(let error) {
                     print(error.localizedDescription)
                 }

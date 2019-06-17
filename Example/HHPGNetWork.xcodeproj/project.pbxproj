@@ -13,6 +13,7 @@
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
+		8119853D22B768E3006B1BA6 /* Example.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8119853C22B768E3006B1BA6 /* Example.swift */; };
 		81D0F27222B339E60044AE42 /* AppInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D0F27122B339E50044AE42 /* AppInfo.swift */; };
 		81D0F27422B339EA0044AE42 /* Common+Api.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D0F27322B339EA0044AE42 /* Common+Api.swift */; };
 		BA0EB01D9E1322E404153232 /* Pods_HHPGNetWork_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B81F0F3E77E356EEC6C95E7 /* Pods_HHPGNetWork_Example.framework */; };
@@ -45,6 +46,7 @@
 		607FACE51AFB9204008FA782 /* HHPGNetWork_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HHPGNetWork_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
+		8119853C22B768E3006B1BA6 /* Example.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Example.swift; sourceTree = "<group>"; };
 		81D0F27122B339E50044AE42 /* AppInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppInfo.swift; sourceTree = "<group>"; };
 		81D0F27322B339EA0044AE42 /* Common+Api.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Common+Api.swift"; sourceTree = "<group>"; };
 		91DFA3BB12F6941C7B7913C0 /* Pods-HHPGNetWork_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HHPGNetWork_Example.debug.xcconfig"; path = "Target Support Files/Pods-HHPGNetWork_Example/Pods-HHPGNetWork_Example.debug.xcconfig"; sourceTree = "<group>"; };
@@ -107,6 +109,7 @@
 			isa = PBXGroup;
 			children = (
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
+				8119853C22B768E3006B1BA6 /* Example.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
 				81D0F27322B339EA0044AE42 /* Common+Api.swift */,
 				81D0F27122B339E50044AE42 /* AppInfo.swift */,
@@ -351,6 +354,7 @@
 				81D0F27422B339EA0044AE42 /* Common+Api.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 				81D0F27222B339E60044AE42 /* AppInfo.swift in Sources */,
+				8119853D22B768E3006B1BA6 /* Example.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

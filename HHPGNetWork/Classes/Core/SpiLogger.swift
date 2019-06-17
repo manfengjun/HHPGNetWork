@@ -7,6 +7,7 @@
 
 import UIKit
 import Moya
+import Result
 public class SpiLogger: PluginType {
     var logEnable : Bool = false
     
