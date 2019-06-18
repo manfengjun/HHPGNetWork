@@ -27,11 +27,26 @@
     {
       "name": "Core",
       "dependencies": {
-        "Moya/RxSwift": [
+        "Moya": [
+
+        ],
+        "Result": [
 
         ]
       },
       "source_files": "HHPGNetWork/Classes/Core/**/*"
+    },
+    {
+      "name": "Rx",
+      "dependencies": {
+        "HHPGNetWork/Core": [
+
+        ],
+        "Moya/RxSwift": [
+
+        ]
+      },
+      "source_files": "HHPGNetWork/Classes/Rx/**/*"
     }
   ]
 }

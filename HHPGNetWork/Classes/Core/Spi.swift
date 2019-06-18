@@ -31,8 +31,7 @@ public class Spi: NSObject {
         return provider
 
     }
-    //MARK: - 网络事件操作
-    
+    //MARK: - 发送请求
     public func send(completion: @escaping Completion) {
         let provider = target.logEnable ? asProvider().log : asProvider()
         provider.request(self, completion: completion)
