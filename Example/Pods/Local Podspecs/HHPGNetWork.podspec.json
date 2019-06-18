@@ -29,9 +29,6 @@
       "dependencies": {
         "Moya": [
 
-        ],
-        "Result": [
-
         ]
       },
       "source_files": "HHPGNetWork/Classes/Core/**/*"

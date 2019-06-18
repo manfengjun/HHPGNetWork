@@ -14,7 +14,7 @@ enum Common {
     
     
 }
-extension Common : SpiTarget {
+extension Common : PGSpiTarget {
     var path: String {
         switch self {
         case .getAllRegion: return "/satinApi"

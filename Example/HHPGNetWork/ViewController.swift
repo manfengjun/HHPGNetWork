@@ -14,40 +14,23 @@ let disposeBag = DisposeBag()
 class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
-//        let provider = MoyaProvider<Commons>()
-//        provider.rx.request(Commons.getAllRegion).subscribe(onSuccess: { (response) in
-//            print(response)
-//        }) { (error) in
-//            print(error.localizedDescription)
-//        }
         // 初始化 网络库设置
-        SpiManager.config.setConfig(baseUrls: ["https://api.apiopen.top"],
-                                    result_key: SpiRegKey(code: "code",
+        PGSpiManager.config.setConfig(baseUrls: ["https://api.apiopen.top"],
+                                    result_key: PGSpiRegKey(code: "code",
                                                           msg: "message",
-                                                          data: "data",
+                                                          data: "data1",
                                                           success: 200))
 
-        // 请求示例
-        _ = Spi(Common.getAllRegion).sendRx().subscribe(onSuccess: { (response) in
-            print(response)
-        }, onError: { (error) in
+        // RxSwift请求示例
+        _ = PGSpi(Common.getAllRegion).rxSend().mapSpiObjects(to: AppInfo.self).subscribe(onSuccess: { (value) in
+            print(value.count)
+            print(value[0].toJSONString())
+        }) { (error) in
             print(error.localizedDescription)
-        })
+        }.disposed(by: disposeBag)
         
-//        subscribe(onSuccess: { (response) in
-//            print(response.data)
-//        }, onError: { (error) in
-//            print(error.localizedDescription)
-//        }).disposed(by: disposeBag)
-        
-        
-        
-//        mapRxSpiObjects(to: AppInfo.self).subscribe(onSuccess: { (value) in
-//            print(value[0].toJSONString())
-//        }) { (error) in
-//            print(error.localizedDescription)
-//        }
-//        send { (response) in
+        // 请求示例
+//        PGSpi(Common.getAllRegion).send { (response) in
 //            switch response.result {
 //            case .success(let value):
 //                do {
@@ -75,7 +58,7 @@ extension Error {
     ///
     /// - Returns:
     public func handle() -> (status: Int, message: String){
-        guard let error = self as? SpiError else {
+        guard let error = self as? PGSpiError else {
             return (-1, "服务器异常，请稍后再试!")
         }
         let status = error.status ?? -1

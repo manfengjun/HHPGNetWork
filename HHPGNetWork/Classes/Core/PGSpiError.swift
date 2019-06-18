@@ -1,5 +1,5 @@
 //
-//  SpiError.swift
+//  PGSpiError.swift
 //  Alamofire
 //
 //  Created by ios on 2019/6/14.
@@ -15,7 +15,7 @@ import Foundation
 /// - responseValidationFailed: 当`validate（）`调用失败时返回
 /// - responseSerializationFailed: 响应序列化程序在序列化过程中遇到错误时返回
 /// - responseCodableFailed: 响应结果编码错误
-public enum SpiError: Error {
+public enum PGSpiError: Error {
     /// 参数编码失败原因
     ///
     /// - missingURL:           无可用URL
@@ -24,7 +24,7 @@ public enum SpiError: Error {
         case missingURL
         case jsonEncodingFailed(Error)
     }
-    
+
     /// 响应验证错误
     ///
     /// - dataFileNil:     数据文件为空
@@ -39,14 +39,14 @@ public enum SpiError: Error {
         case unacceptableContentType(acceptableContentTypes: [String], responseContentType: String)
         case unacceptableStatusCode(code: Int)
     }
-    
+
     /// 响应数据序列化失败原因
     ///
     /// - dataIsNil: 响应数据为空
     /// - jsonIsNotADictionary: 序列化结果不是字典
     /// - jsonSerializationFailed: JSON 序列化失败
     /// - objectFailed: 对象 序列化失败
-    
+
     public enum ResponseSerializationFailureReason {
         case dataIsNil
         case jsonIsNotADictionary
@@ -54,7 +54,7 @@ public enum SpiError: Error {
         case dataLengthIsZero
         case objectFailed
     }
-    
+
     /// 执行结果异常
     ///
     /// - executeFail: 执行结果异常，操作失败
@@ -63,7 +63,7 @@ public enum SpiError: Error {
         case executeFail(code: Int, msg: String?)
         case unlegal
     }
-    
+
     case invalidURL(baseURL: String, path: String)
     case parameterEncodingFailed(reason: ParameterEncodingFailureReason)
     case responseValidationFailed(reason: ResponseValidationFailureReason)
@@ -71,34 +71,34 @@ public enum SpiError: Error {
     case executeFailed(reason: ExecuteFailureReason)
 }
 
-extension SpiError {
+extension PGSpiError {
     public var isInvalidURL: Bool {
         if case .invalidURL = self { return true }
         return false
     }
-    
+
     public var isParameterEncodingFailed: Bool {
         if case .parameterEncodingFailed = self { return true }
         return false
     }
-    
+
     public var isResponseValidationFailed: Bool {
         if case .responseValidationFailed = self { return true }
         return false
     }
-    
+
     public var isResponseSerializationFailed: Bool {
         if case .responseSerializationFailed = self { return true }
         return false
     }
-    
+
     public var isExecuteFailed: Bool {
         if case .executeFailed = self { return true }
         return false
     }
 }
 
-extension SpiError {
+extension PGSpiError {
     var underlyingError: Error? {
         switch self {
         case .parameterEncodingFailed(reason: let reason):
@@ -115,7 +115,7 @@ extension SpiError {
     }
 }
 
-extension SpiError.ParameterEncodingFailureReason {
+extension PGSpiError.ParameterEncodingFailureReason {
     var underlyingError: Error? {
         switch self {
         case .jsonEncodingFailed(let error):
@@ -126,7 +126,7 @@ extension SpiError.ParameterEncodingFailureReason {
     }
 }
 
-extension SpiError.ResponseSerializationFailureReason {
+extension PGSpiError.ResponseSerializationFailureReason {
     var underlyingError: Error? {
         switch self {
         case .jsonSerializationFailed(let error):
@@ -137,19 +137,19 @@ extension SpiError.ResponseSerializationFailureReason {
     }
 }
 
-extension SpiError.ResponseValidationFailureReason {
+extension PGSpiError.ResponseValidationFailureReason {
     var underlyingError: Error? {
         return nil
     }
 }
 
-extension SpiError.ExecuteFailureReason {
+extension PGSpiError.ExecuteFailureReason {
     var underlyingError: Error? {
         return nil
     }
 }
 
-extension SpiError: LocalizedError {
+extension PGSpiError: LocalizedError {
     public var status: Int? {
         switch self {
         case .executeFailed(let reason):
@@ -158,7 +158,7 @@ extension SpiError: LocalizedError {
             return nil
         }
     }
-    
+
     public var message: String? {
         switch self {
         case .executeFailed(let reason):
@@ -167,7 +167,7 @@ extension SpiError: LocalizedError {
             return "服务器异常，请稍后再试!"
         }
     }
-    
+
     public var errorDescription: String? {
         switch self {
         case .invalidURL(let base, let path):
@@ -184,7 +184,7 @@ extension SpiError: LocalizedError {
     }
 }
 
-extension SpiError.ParameterEncodingFailureReason: LocalizedError {
+extension PGSpiError.ParameterEncodingFailureReason: LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .missingURL:
@@ -195,7 +195,7 @@ extension SpiError.ParameterEncodingFailureReason: LocalizedError {
     }
 }
 
-extension SpiError.ResponseSerializationFailureReason: LocalizedError {
+extension PGSpiError.ResponseSerializationFailureReason: LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .dataIsNil:
@@ -212,7 +212,7 @@ extension SpiError.ResponseSerializationFailureReason: LocalizedError {
     }
 }
 
-extension SpiError.ResponseValidationFailureReason: LocalizedError {
+extension PGSpiError.ResponseValidationFailureReason: LocalizedError {
     public var localizedDescription: String {
         switch self {
         case .dataFileNil:
@@ -235,7 +235,7 @@ extension SpiError.ResponseValidationFailureReason: LocalizedError {
     }
 }
 
-extension SpiError.ExecuteFailureReason: LocalizedError {
+extension PGSpiError.ExecuteFailureReason: LocalizedError {
     public var status: Int? {
         switch self {
         case .executeFail(let code, _):
@@ -244,7 +244,7 @@ extension SpiError.ExecuteFailureReason: LocalizedError {
             return nil
         }
     }
-    
+
     public var message: String? {
         switch self {
         case .executeFail(_, let msg):
@@ -253,7 +253,7 @@ extension SpiError.ExecuteFailureReason: LocalizedError {
             return nil
         }
     }
-    
+
     public var errorDescription: String? {
         switch self {
         case .executeFail(_, let msg):
@@ -264,7 +264,7 @@ extension SpiError.ExecuteFailureReason: LocalizedError {
             }
             return msg
         case .unlegal:
-            return "执行结果状态码不合理"
+            return "执行结果不合法"
         }
     }
 }

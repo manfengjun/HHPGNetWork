@@ -1,5 +1,5 @@
 //
-//  SpiManager.swift
+//  PGSpiManager.swift
 //  Alamofire
 //
 //  Created by ios on 2019/6/13.
@@ -8,10 +8,10 @@
 import Alamofire
 import UIKit
 
-public class SpiManager {
-    public static var manager: SpiManager {
+public class PGSpiManager {
+    public static var manager: PGSpiManager {
         struct Static {
-            static let manager: SpiManager = SpiManager()
+            static let manager: PGSpiManager = PGSpiManager()
         }
         return Static.manager
     }
@@ -22,23 +22,20 @@ public class SpiManager {
         public static var baseUrls: [String] = [""]
         public static var httpHeaders: [String: String]?
         public static var startImmediately: Bool?
-        public static var allowsCellucerAccess: Bool?
-        public static var timeoutInterval: TimeInterval?
-        public static var result_key: SpiRegKey = SpiRegKey()
+        public static var timeoutInterval: TimeInterval = 60
+        public static var result_key: PGSpiRegKey = PGSpiRegKey()
         public static var logEnable: Bool = true
         
         /// 静态方法，设置 Bat 全局配置
         public static func setConfig(baseUrls: [String] = [],
                                      httpHeaders: HTTPHeaders? = nil,
                                      startImmediately: Bool = true,
-                                     allowsCellucerAccess: Bool = true,
                                      timeoutInterval: TimeInterval = 60,
-                                     result_key: SpiRegKey? = nil,
+                                     result_key: PGSpiRegKey? = nil,
                                      logEnable: Bool = true) {
             self.baseUrls = baseUrls
             self.httpHeaders = httpHeaders
             self.startImmediately = startImmediately
-            self.allowsCellucerAccess = allowsCellucerAccess
             self.timeoutInterval = timeoutInterval
             self.logEnable = logEnable
             if let resultKey = result_key {
@@ -52,22 +49,22 @@ public class SpiManager {
     
     /// 轮询次数
     public var retryNum: Int {
-        return self.repeatNum * SpiManager.config.baseUrls.count
+        return self.repeatNum * PGSpiManager.config.baseUrls.count
     }
     
     /// 当前数组位置
     private var index: Int = 0
     /// 基础地址
     public var baseUrl: String {
-        if SpiManager.config.baseUrls.count > 0 {
-            return SpiManager.config.baseUrls[self.index % SpiManager.config.baseUrls.count]
+        if PGSpiManager.config.baseUrls.count > 0 {
+            return PGSpiManager.config.baseUrls[self.index % PGSpiManager.config.baseUrls.count]
         } else {
             return ""
         }
     }
     
     func getNext() {
-        if self.index < SpiManager.config.baseUrls.count * self.repeatNum {
+        if self.index < PGSpiManager.config.baseUrls.count * self.repeatNum {
             self.index = self.index + 1
         } else {
             self.index = 0
@@ -85,7 +82,7 @@ public class UrlManager {
     }
 }
 
-public struct SpiRegKey {
+public struct PGSpiRegKey {
     var code_key: String = "status"
     var msg_key: String = "msg"
     var data_key: String = "data"
