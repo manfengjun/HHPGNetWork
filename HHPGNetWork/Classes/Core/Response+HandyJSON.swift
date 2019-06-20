@@ -15,22 +15,17 @@ public extension Response {
         if emptyDataStatusCodes.contains(statusCode) {
             return [:]
         }
-        do {
-            let jsonData = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
-            guard let json = jsonData as? [String: Any] else {
-                throw PGSpiError.responseSerializationFailed(reason: .jsonIsNotADictionary)
+        let jsonData = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+        guard let json = jsonData as? [String: Any] else {
+            throw PGSpiError.responseSerializationFailed(reason: .jsonIsNotADictionary)
+        }
+        if let status = json[PGSpiManager.config.result_key.code_key] as? Int, status == PGSpiManager.config.result_key.success_key {
+            return json
+        } else {
+            guard let status = json[PGSpiManager.config.result_key.code_key] as? Int else {
+                throw PGSpiError.executeFailed(reason: .unlegal)
             }
-            if let status = json[PGSpiManager.config.result_key.code_key] as? Int, status == PGSpiManager.config.result_key.success_key {
-                return json
-            } else {
-                guard let status = json[PGSpiManager.config.result_key.code_key] as? Int else {
-                    throw PGSpiError.executeFailed(reason: .unlegal)
-                }
-                throw PGSpiError.executeFailed(reason: .executeFail(code: status, msg: json[PGSpiManager.config.result_key.msg_key] as? String))
-            }
-            
-        } catch {
-            throw PGSpiError.responseSerializationFailed(reason: .jsonSerializationFailed(error))
+            throw PGSpiError.executeFailed(reason: .executeFail(code: status, msg: json[PGSpiManager.config.result_key.msg_key] as? String))
         }
     }
 }
