@@ -7,7 +7,6 @@
 
 import Alamofire
 import Moya
-import RxSwift
 import UIKit
 private let requestClosure = { (endpoint: Endpoint, done: @escaping MoyaProvider<PGSpi>.RequestResultClosure) in
     do {

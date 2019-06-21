@@ -21,11 +21,11 @@ Pod::Spec.new do |s|
 TODO: RxSwift封装络请求封， 包含了网络请求，数据解析.
                        DESC
 
-  s.homepage         = 'https://github.com/liufengjun/HHPGNetWork'
+  s.homepage         = 'https://github.com/manfengjun/HHPGNetWork'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
-  s.author           = { 'liufengjun' => '2546863989@qq.com' }
-  s.source           = { :git => 'https://github.com/liufengjun/HHPGNetWork.git', :tag => s.version.to_s }
+  s.author           = { 'manfengjun' => 'chinafengjun@gmail.com' }
+  s.source           = { :git => 'https://github.com/manfengjun/HHPGNetWork.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.ios.deployment_target = '8.0'
