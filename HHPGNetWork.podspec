@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'HHPGNetWork'
-  s.version          = '0.1.1'
+  s.version          = '0.1.2'
   s.summary          = 'RxSwift & Alamofire 网络库'
 
 # This description is used to generate tags and improve search results.
@@ -28,7 +28,7 @@ TODO: RxSwift封装络请求封， 包含了网络请求，数据解析.
   s.source           = { :git => 'https://github.com/manfengjun/HHPGNetWork.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
-  s.ios.deployment_target = '8.0'
+  s.ios.deployment_target = '10.0'
 
   # s.source_files = 'JJEx/Classes/**/*'
   s.subspec 'Core' do |c|
