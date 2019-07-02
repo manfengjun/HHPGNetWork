@@ -5,25 +5,24 @@
 [![License](https://img.shields.io/cocoapods/l/HHPGNetWork.svg?style=flat)](https://cocoapods.org/pods/HHPGNetWork)
 [![Platform](https://img.shields.io/cocoapods/p/HHPGNetWork.svg?style=flat)](https://cocoapods.org/pods/HHPGNetWork)
 
-## Example
+## 安装
 
-To run the example project, clone the repo, and run `pod install` from the Example directory first.
-
-## Requirements
-
-## Installation
-
-HHPGNetWork is available through [CocoaPods](https://cocoapods.org). To install
-it, simply add the following line to your Podfile:
-
-```ruby
+```
 pod 'HHPGNetWork'
 ```
 
-## Author
+## 使用说明
 
-liufengjun, liufengjun@chinawutong.com
+### 基础配置
 
-## License
+```
+PGSpiManager.config.setConfig(baseUrls: ["https://api.apiopen.top"],result_key: PGSpiRegKey(code: "code",msg: "message",data: "data1",success: 200))
+```
 
-HHPGNetWork is available under the MIT license. See the LICENSE file for more info.
+## 作者
+
+chinafengjun@gmail.com
+
+## 开源协议
+
+本项目基于 [MIT](https://zh.wikipedia.org/wiki/MIT%E8%A8%B1%E5%8F%AF%E8%AD%89) 协议，请自由地享受和参与开源。
