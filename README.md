@@ -16,7 +16,11 @@ pod 'HHPGNetWork'
 ### 基础配置
 
 ```
-PGSpiManager.config.setConfig(baseUrls: ["https://api.apiopen.top"],result_key: PGSpiRegKey(code: "code",msg: "message",data: "data1",success: 200))
+PGSpiManager.config.setConfig(baseUrls: ["https://api.apiopen.top"],
+                              result_key: PGSpiRegKey(code: "code",
+                                                      msg: "message",
+                                                      data: "data1",
+                                                      success: 200))
 ```
 
 ## 作者
