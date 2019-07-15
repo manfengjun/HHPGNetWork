@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'HHPGNetWork'
-  s.version          = '0.1.2'
+  s.version          = '0.1.3'
   s.summary          = 'RxSwift & Alamofire 网络库'
 
 # This description is used to generate tags and improve search results.
@@ -38,6 +38,7 @@ TODO: RxSwift封装络请求封， 包含了网络请求，数据解析.
   s.subspec 'Rx' do |r|
       r.dependency "HHPGNetWork/Core"
       r.dependency 'Moya/RxSwift'
+      s.dependency 'RxCocoa'
       r.source_files = 'HHPGNetWork/Classes/Rx/**/*'
   end
   # s.source_files = 'HHPGNetWork/Classes/**/*'

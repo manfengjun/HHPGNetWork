@@ -5,13 +5,16 @@ PODS:
     - HandyJSON
     - HHPGNetWork/Core (= 0.1.2)
     - HHPGNetWork/Rx (= 0.1.2)
+    - RxCocoa
   - HHPGNetWork/Core (0.1.2):
     - HandyJSON
     - Moya
+    - RxCocoa
   - HHPGNetWork/Rx (0.1.2):
     - HandyJSON
     - HHPGNetWork/Core
     - Moya/RxSwift
+    - RxCocoa
   - Moya (13.0.1):
     - Moya/Core (= 13.0.1)
   - Moya/Core (13.0.1):
@@ -21,17 +24,20 @@ PODS:
     - Moya/Core
     - RxSwift (~> 4.0)
   - Result (4.1.0)
+  - RxCocoa (4.5.0):
+    - RxSwift (>= 4.4.2, ~> 4.4)
   - RxSwift (4.5.0)
 
 DEPENDENCIES:
   - HHPGNetWork (from `../`)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  https://mirrors.tuna.tsinghua.edu.cn/git/cocoapods/specs.git:
     - Alamofire
     - HandyJSON
     - Moya
     - Result
+    - RxCocoa
     - RxSwift
 
 EXTERNAL SOURCES:
@@ -41,11 +47,12 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
   HandyJSON: 992f2d661716d6a91de82d0056927bc7813b5770
-  HHPGNetWork: cb15f43b4330f19c5a72830a70bd1818abec3817
+  HHPGNetWork: 14c39308b5f88e2903691e0aadfbb7667296c06f
   Moya: f4a4b80ff2f8a4ffc208dfb31cd91636622fee6e
   Result: bd966fac789cc6c1563440b348ab2598cc24d5c7
+  RxCocoa: cbf70265dc65a981d4ac982e513c10cf23df24a0
   RxSwift: f172070dfd1a93d70a9ab97a5a01166206e1c575
 
-PODFILE CHECKSUM: c07094c9f6a7d1375ca4639e4a88e49cac3ed176
+PODFILE CHECKSUM: eb40ef351cd99b8bdab9034112e5d9eff4df232b
 
-COCOAPODS: 1.6.1
+COCOAPODS: 1.7.2

@@ -19,6 +19,9 @@
     "ios": "10.0"
   },
   "dependencies": {
+    "RxCocoa": [
+
+    ],
     "HandyJSON": [
 
     ]
