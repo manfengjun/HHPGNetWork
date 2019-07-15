@@ -13,7 +13,10 @@ public extension PGSpi {
     /// RxSwift 请求
     ///
     /// - Returns:
-    func rxSend() -> Single<Response> {
-        return provider.rx.request(self)
+    func rxSend(_ activityIndicator: ActivityIndicator? = nil) -> Single<Response> {
+        guard let activityIndicator = activityIndicator else {
+            return provider.rx.request(self)
+        }
+        return provider.rx.request(self).trackActivity(activityIndicator).asSingle()
     }
 }

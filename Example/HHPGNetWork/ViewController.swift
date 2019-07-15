@@ -22,7 +22,7 @@ class ViewController: UIViewController {
                                                           success: 200))
 
         // RxSwift请求示例
-        PGSpi(Common.getAllRegion).rxSend().trackActivity(ActivityIndicator()).asSingle().mapSpiObjects(to: AppInfo.self).subscribe(onSuccess: { (value) in
+        PGSpi(Common.getAllRegion).rxSend(ActivityIndicator()).mapSpiObjects(to: AppInfo.self).subscribe(onSuccess: { (value) in
             print(value.count)
             print(value[0].toJSONString())
         }) { (error) in
