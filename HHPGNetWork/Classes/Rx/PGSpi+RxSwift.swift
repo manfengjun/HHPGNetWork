@@ -12,11 +12,20 @@ import UIKit
 public extension PGSpi {
     /// RxSwift 请求
     ///
-    /// - Returns:
-    func rxSend(_ activityIndicator: ActivityIndicator? = nil) -> Single<Response> {
-        guard let activityIndicator = activityIndicator else {
-            return provider.rx.request(self)
+    /// - Returns: Single<Response>
+    func single() -> Single<Response> {
+        return provider.rx.request(self)
+    }
+    
+    /// RxSwift 请求
+    ///
+    /// - Parameter activityIndicator: 请求状态
+    /// - Returns: Observable<Response>
+    func observable(_ activityIndicator: ActivityIndicator? = nil) -> Observable<Response> {
+        let observable = provider.rx.request(self).asObservable()
+        if let activityIndicator = activityIndicator {
+            return observable.trackActivity(activityIndicator)
         }
-        return provider.rx.request(self).trackActivity(activityIndicator).asSingle()
+        return observable
     }
 }
