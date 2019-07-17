@@ -1,6 +1,6 @@
 {
   "name": "HHPGNetWork",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "summary": "RxSwift & Alamofire 网络库",
   "description": "TODO: RxSwift封装络请求封， 包含了网络请求，数据解析.",
   "homepage": "https://github.com/manfengjun/HHPGNetWork",
@@ -13,7 +13,7 @@
   },
   "source": {
     "git": "https://github.com/manfengjun/HHPGNetWork.git",
-    "tag": "0.1.3"
+    "tag": "0.1.4"
   },
   "platforms": {
     "ios": "10.0"

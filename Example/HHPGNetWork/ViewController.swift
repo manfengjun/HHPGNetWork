@@ -22,12 +22,18 @@ class ViewController: UIViewController {
                                                           success: 200))
 
         // RxSwift请求示例
-        PGSpi(Common.getAllRegion).observable(ActivityIndicator()).mapSpiObjects(to: AppInfo.self).subscribe(onNext: { (value) in
+        Observable.just(1).flatMap { _ in PGSpi(Common.getAllRegion).observable()}.mapSpiObjects(to: AppInfo.self).subscribe(onNext: { (value) in
             print(value.count)
             print(value[0].toJSONString())
         }, onError: { (error) in
             print(error.localizedDescription)
         }).disposed(by: disposeBag)
+//        PGSpi(Common.getAllRegion).observable(ActivityIndicator()).mapSpiObjects(to: AppInfo.self).subscribe(onNext: { (value) in
+//            print(value.count)
+//            print(value[0].toJSONString())
+//        }, onError: { (error) in
+//            print(error.localizedDescription)
+//        }).disposed(by: disposeBag)
         
 //        // 流请求示例
 //        PGSpi(Common.getAllRegion).send { (response) in
