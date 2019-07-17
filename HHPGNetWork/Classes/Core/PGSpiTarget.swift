@@ -54,22 +54,13 @@ extension PGSpiTarget {
 extension PGSpiTarget {
     /// 根据当前配置生成 URL
     ///
-    /// - Returns: URL:  拼接 baseURL 及 path 生成的 url
+    /// - Returns: URL:  baseURL 生成的 url
     /// - Throws: bathURL 或 path 不符合规则
     func asURL() throws -> URL {
-        if path.hasPrefix("http") {
-            if let url = URL(string: path) {
-                return url
-            } else {
-                throw PGSpiError.invalidURL(baseURL: baseURL, path: path)
-            }
+        if let url = URL(string: baseURL) {
+            return url
         } else {
-            if var url = URL(string: baseURL) {
-                url.appendPathComponent(path)
-                return url
-            } else {
-                throw PGSpiError.invalidURL(baseURL: baseURL, path: path)
-            }
+            throw PGSpiError.invalidURL(baseURL: baseURL, path: path)
         }
     }
 }
