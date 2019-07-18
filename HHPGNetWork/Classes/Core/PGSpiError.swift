@@ -204,7 +204,7 @@ extension PGSpiError.RequestException: LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .networkException(let error):
-            return "NetWork Exception:\(error?.localizedDescription)"
+            return "NetWork Exception:\(error?.localizedDescription ?? "")"
         case .invalidURL(let baseURL, let path):
             return "Url Exception: \(baseURL)\(path)"
         }
@@ -217,7 +217,7 @@ extension PGSpiError.ResponseSerializationException: LocalizedError {
         case .dataNotFound:
             return "The data in response was not found"
         case .jsonSerializationFailed(let error):
-            return "Response Serialization Failed: \(error?.localizedDescription)"
+            return "Response Serialization Failed: \(error?.localizedDescription ?? "")"
         case .objectFailed:
             return "The Serialization Result is not a Object"
         }
