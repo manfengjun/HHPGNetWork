@@ -25,9 +25,9 @@ public extension PrimitiveSequence where TraitType == SingleTrait, ElementType =
     ///
     /// - Parameter type: HandyJSON
     /// - Returns: HandyJSON
-    func mapSpiObject<T: HandyJSON>(to type: T.Type) -> Single<T> {
+    func mapSpiObject<T: HandyJSON>(to type: T.Type, path: String? = nil) -> Single<T> {
         return flatMap { response -> Single<T> in
-            Single.just(try response.mapSpiObject(type))
+            Single.just(try response.mapSpiObject(type, designatedPath: path))
         }
     }
 
@@ -35,9 +35,9 @@ public extension PrimitiveSequence where TraitType == SingleTrait, ElementType =
     ///
     /// - Parameter type: HandyJSON
     /// - Returns: [HandyJSON]
-    func mapSpiObjects<T: HandyJSON>(to type: T.Type) -> Single<[T]> {
+    func mapSpiObjects<T: HandyJSON>(to type: T.Type, path: String? = nil) -> Single<[T]> {
         return flatMap { response -> Single<[T]> in
-            Single.just(try response.mapSpiObjects(type))
+            Single.just(try response.mapSpiObjects(type, designatedPath: path))
         }
     }
 }
