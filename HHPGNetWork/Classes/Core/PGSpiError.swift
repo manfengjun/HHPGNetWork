@@ -97,8 +97,6 @@ extension PGSpiError {
             return exception.underlyingError
         case .executeException(exception: let exception):
             return exception.underlyingError
-        default:
-            return nil
         }
     }
 }
@@ -185,8 +183,6 @@ extension PGSpiError.RequestException: LocalizedError {
             return -1001
         case .invalidURL:
             return -1002
-        default:
-            return -1000
         }
     }
     
@@ -196,8 +192,6 @@ extension PGSpiError.RequestException: LocalizedError {
             return "网络异常，请稍后重试！"
         case .invalidURL:
             return "请求异常"
-        default:
-            return nil
         }
     }
 
@@ -246,7 +240,7 @@ extension PGSpiError.ResponseException: LocalizedError {
             return "请求异常"
         case .unacceptableContentType:
             return "请求异常"
-        case .unacceptableStatusCode(let code):
+        case .unacceptableStatusCode:
             return "请求异常"
         }
     }
@@ -274,8 +268,6 @@ extension PGSpiError.ExecuteException: LocalizedError {
             return code
         case .unlegal:
             return -3001
-        default:
-            return nil
         }
     }
 
