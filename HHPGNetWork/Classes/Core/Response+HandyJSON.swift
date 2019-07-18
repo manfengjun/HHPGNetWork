@@ -17,15 +17,15 @@ public extension Response {
         }
         let jsonData = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
         guard let json = jsonData as? [String: Any] else {
-            throw PGSpiError.responseSerializationFailed(reason: .jsonIsNotADictionary)
+            throw PGSpiError.responseSerializationException(exception: PGSpiError.ResponseSerializationException.jsonSerializationFailed(nil))
         }
         if let status = json[PGSpiManager.config.result_key.code_key] as? Int, status == PGSpiManager.config.result_key.success_key {
             return json
         } else {
             guard let status = json[PGSpiManager.config.result_key.code_key] as? Int else {
-                throw PGSpiError.executeFailed(reason: .unlegal)
+                throw PGSpiError.executeException(exception: .unlegal)
             }
-            throw PGSpiError.executeFailed(reason: .executeFail(code: status, msg: json[PGSpiManager.config.result_key.msg_key] as? String))
+            throw PGSpiError.executeException(exception: .executeFail(code: status, msg: json[PGSpiManager.config.result_key.msg_key] as? String))
         }
     }
 }
@@ -36,13 +36,13 @@ public extension Response {
     func mapSpiObject<T: HandyJSON>(_ type: T.Type, designatedPath: String? = nil) throws -> T {
         let json = try mapSpiJSON()
         guard let value = json as? [String: Any] else {
-            throw PGSpiError.responseSerializationFailed(reason: .jsonIsNotADictionary)
+            throw PGSpiError.responseSerializationException(exception: .jsonSerializationFailed(nil))
         }
         if let value = value[PGSpiManager.config.result_key.data_key] as? T {
             return value
         } else {
             guard let object = value[PGSpiManager.config.result_key.data_key] as? [String: Any] else {
-                throw PGSpiError.responseSerializationFailed(reason: .dataIsNil)
+                throw PGSpiError.responseSerializationException(exception: .dataNotFound)
             }
             if let path = designatedPath, path.count > 0 {
                 if let model = T.self.deserialize(from: object, designatedPath: path) {
@@ -53,7 +53,7 @@ public extension Response {
                     return model
                 }
             }
-            throw PGSpiError.responseSerializationFailed(reason: .objectFailed)
+            throw PGSpiError.responseSerializationException(exception: .objectFailed)
         }
     }
 }
@@ -64,31 +64,31 @@ public extension Response {
     func mapSpiObjects<T: HandyJSON>(_ type: T.Type, designatedPath: String? = nil) throws -> [T] {
         let json = try mapSpiJSON()
         guard let value = json as? [String: Any] else {
-            throw PGSpiError.responseSerializationFailed(reason: .jsonIsNotADictionary)
+            throw PGSpiError.responseSerializationException(exception: PGSpiError.ResponseSerializationException.jsonSerializationFailed(nil))
         }
         if let value = value[PGSpiManager.config.result_key.data_key] as? [T] {
             return value
         } else {
             guard let data = value[PGSpiManager.config.result_key.data_key] else {
-                throw PGSpiError.responseSerializationFailed(reason: .dataIsNil)
+                throw PGSpiError.responseSerializationException(exception: .dataNotFound)
             }
             if let path = designatedPath, path.count > 0 {
                 guard let datajson = data as? [String: Any] else {
-                    throw PGSpiError.responseSerializationFailed(reason: .objectFailed)
+                    throw PGSpiError.responseSerializationException(exception: .objectFailed)
                 }
                 guard let array = datajson[path] as? [[String: Any]] else {
-                    throw PGSpiError.responseSerializationFailed(reason: .objectFailed)
+                    throw PGSpiError.responseSerializationException(exception: .objectFailed)
                 }
                 guard let models = [T].deserialize(from: array) else {
-                    throw PGSpiError.responseSerializationFailed(reason: .objectFailed)
+                    throw PGSpiError.responseSerializationException(exception: .objectFailed)
                 }
                 return models as! [T]
             } else {
                 guard let array = data as? [[String: Any]] else {
-                    throw PGSpiError.responseSerializationFailed(reason: .objectFailed)
+                    throw PGSpiError.responseSerializationException(exception: .objectFailed)
                 }
                 guard let models = [T].deserialize(from: array) else {
-                    throw PGSpiError.responseSerializationFailed(reason: .objectFailed)
+                    throw PGSpiError.responseSerializationException(exception: .objectFailed)
                 }
                 return models as! [T]
             }

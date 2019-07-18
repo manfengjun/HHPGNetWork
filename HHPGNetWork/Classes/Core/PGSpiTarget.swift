@@ -57,10 +57,14 @@ extension PGSpiTarget {
     /// - Returns: URL:  baseURL 生成的 url
     /// - Throws: bathURL 或 path 不符合规则
     func asURL() throws -> URL {
-        if let url = URL(string: baseURL) {
+        var base: String = baseURL
+        if base.count <= 0 {
+            base = "http://"
+        }
+        if let url = URL(string: base) {
             return url
         } else {
-            throw PGSpiError.invalidURL(baseURL: baseURL, path: path)
+            throw PGSpiError.requestException(exception: .invalidURL(baseURL: baseURL, path: path))
         }
     }
 }

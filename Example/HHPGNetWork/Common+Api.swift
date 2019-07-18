@@ -38,7 +38,7 @@ extension Common : PGSpiTarget {
         return [:]
     }
     var baseURL: String {
-        return "https://www.apiopen.top"
+        return ""
     }
     
     

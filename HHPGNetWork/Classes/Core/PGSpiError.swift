@@ -16,84 +16,72 @@ import Foundation
 /// - responseSerializationFailed: 响应序列化程序在序列化过程中遇到错误时返回
 /// - responseCodableFailed: 响应结果编码错误
 public enum PGSpiError: Error {
-    /// 参数编码失败原因
+    
+    /// 连接异常
     ///
-    /// - missingURL:           无可用URL
-    /// - jsonEncodingFailed:   JSON序列化过程出现错误
-    public enum ParameterEncodingFailureReason {
-        case missingURL
-        case jsonEncodingFailed(Error)
+    /// - networkException: 网络异常
+    /// - invalidURL: 请求地址异常
+    public enum RequestException {
+        case networkException(Error?)
+        case invalidURL(baseURL: String, path: String)
     }
 
-    /// 响应验证错误
+    /// 响应异常
     ///
-    /// - dataFileNil:     数据文件为空
-    /// - dataFileReadFailed: 数据文件读取失败
-    /// - missingContentType: 响应数据中不包含 “Content-Type” 并且提供的 “acceptableContentTypes” 中不包含通配符
-    /// - unacceptableContentType: 响应数据中的“Content-Type”在“acceptableContentTypes”找不到匹配项
-    /// - unacceptableStatusCode: 状态码不被接受
-    public enum ResponseValidationFailureReason {
-        case dataFileNil
-        case dataFileReadFailed(at: URL)
-        case missingContentType(acceptableContentTypes: [String])
+    /// - serverException: 服务器异常 500
+    /// - notFound: 方法不存在 404
+    /// - unacceptableContentType: ContentType 不被接受
+    /// - unacceptableStatusCode: 响应状态异常
+    public enum ResponseException {
+        case serverException
+        case notFound
         case unacceptableContentType(acceptableContentTypes: [String], responseContentType: String)
         case unacceptableStatusCode(code: Int)
     }
 
-    /// 响应数据序列化失败原因
+    /// 序列化异常
     ///
-    /// - dataIsNil: 响应数据为空
-    /// - jsonIsNotADictionary: 序列化结果不是字典
-    /// - jsonSerializationFailed: JSON 序列化失败
-    /// - objectFailed: 对象 序列化失败
-
-    public enum ResponseSerializationFailureReason {
-        case dataIsNil
-        case jsonIsNotADictionary
-        case jsonSerializationFailed(Error)
-        case dataLengthIsZero
+    /// - dataNotFound: data缺失
+    /// - jsonSerializationFailed: JSON序列化异常
+    /// - objectFailed: 对象转换失败
+    public enum ResponseSerializationException {
+        case dataNotFound
+        case jsonSerializationFailed(Error?)
         case objectFailed
     }
-
-    /// 执行结果异常
+    
+    /// 执行异常
     ///
     /// - executeFail: 执行结果异常，操作失败
     /// - unlegal: 执行结果状态吗不合理
-    public enum ExecuteFailureReason {
+    public enum ExecuteException {
         case executeFail(code: Int, msg: String?)
         case unlegal
     }
-
-    case invalidURL(baseURL: String, path: String)
-    case parameterEncodingFailed(reason: ParameterEncodingFailureReason)
-    case responseValidationFailed(reason: ResponseValidationFailureReason)
-    case responseSerializationFailed(reason: ResponseSerializationFailureReason)
-    case executeFailed(reason: ExecuteFailureReason)
+    case requestException(exception: RequestException)
+    case responseException(exception: ResponseException)
+    case responseSerializationException(exception: ResponseSerializationException)
+    case executeException(exception: ExecuteException)
 }
 
 extension PGSpiError {
-    public var isInvalidURL: Bool {
-        if case .invalidURL = self { return true }
+    public var isRequestException: Bool {
+        if case .requestException = self { return true }
         return false
     }
 
-    public var isParameterEncodingFailed: Bool {
-        if case .parameterEncodingFailed = self { return true }
+    public var isResponseException: Bool {
+        if case .responseException = self { return true }
         return false
     }
-
-    public var isResponseValidationFailed: Bool {
-        if case .responseValidationFailed = self { return true }
+    
+    public var isResponseSerializationException: Bool {
+        if case .responseSerializationException = self { return true }
         return false
     }
-
-    public var isResponseSerializationFailed: Bool {
-        if case .responseSerializationFailed = self { return true }
-        return false
-    }
-
-    public var isExecuteFailed: Bool {
-        if case .executeFailed = self { return true }
+    
+    public var isExecuteException: Bool {
+        if case .executeException = self { return true }
         return false
     }
 }
@@ -101,24 +89,24 @@ extension PGSpiError {
 extension PGSpiError {
     var underlyingError: Error? {
         switch self {
-        case .parameterEncodingFailed(reason: let reason):
-            return reason.underlyingError
-        case .responseSerializationFailed(reason: let reason):
-            return reason.underlyingError
-        case .responseValidationFailed(reason: let reason):
-            return reason.underlyingError
-        case .executeFailed(reason: let reason):
-            return reason.underlyingError
+        case .requestException(exception: let exception):
+            return exception.underlyingError
+        case .responseException(exception: let exception):
+            return exception.underlyingError
+        case .responseSerializationException(exception: let exception):
+            return exception.underlyingError
+        case .executeException(exception: let exception):
+            return exception.underlyingError
         default:
             return nil
         }
     }
 }
 
-extension PGSpiError.ParameterEncodingFailureReason {
+extension PGSpiError.RequestException {
     var underlyingError: Error? {
         switch self {
-        case .jsonEncodingFailed(let error):
+        case .networkException(let error):
             return error
         default:
             return nil
@@ -126,7 +114,13 @@ extension PGSpiError.ParameterEncodingFailureReason {
     }
 }
 
-extension PGSpiError.ResponseSerializationFailureReason {
+extension PGSpiError.ResponseException {
+    var underlyingError: Error? {
+        return nil
+    }
+}
+
+extension PGSpiError.ResponseSerializationException {
     var underlyingError: Error? {
         switch self {
         case .jsonSerializationFailed(let error):
@@ -137,13 +131,7 @@ extension PGSpiError.ResponseSerializationFailureReason {
     }
 }
 
-extension PGSpiError.ResponseValidationFailureReason {
-    var underlyingError: Error? {
-        return nil
-    }
-}
-
-extension PGSpiError.ExecuteFailureReason {
+extension PGSpiError.ExecuteException {
     var underlyingError: Error? {
         return nil
     }
@@ -152,8 +140,12 @@ extension PGSpiError.ExecuteFailureReason {
 extension PGSpiError: LocalizedError {
     public var status: Int? {
         switch self {
-        case .executeFailed(let reason):
-            return reason.status
+        case .requestException(let exception):
+            return exception.status
+        case .responseException(let exception):
+            return exception.status
+        case .executeException(let exception):
+            return exception.status
         default:
             return nil
         }
@@ -161,8 +153,12 @@ extension PGSpiError: LocalizedError {
 
     public var message: String? {
         switch self {
-        case .executeFailed(let reason):
-            return reason.message
+        case .requestException(let exception):
+            return exception.message
+        case .responseException(let exception):
+            return exception.message
+        case .executeException(let exception):
+            return exception.message
         default:
             return "服务器异常，请稍后再试!"
         }
@@ -170,60 +166,96 @@ extension PGSpiError: LocalizedError {
 
     public var errorDescription: String? {
         switch self {
-        case .invalidURL(let base, let path):
-            return "Invalid URL :=> base:\(base), path:\(path)"
-        case .parameterEncodingFailed(let reason):
-            return reason.errorDescription
-        case .responseSerializationFailed(let reason):
-            return reason.errorDescription
-        case .responseValidationFailed(let reason):
-            return reason.errorDescription
-        case .executeFailed(let reason):
-            return reason.errorDescription
+        case .requestException(let exception):
+            return exception.errorDescription
+        case .responseException(let exception):
+            return exception.errorDescription
+        case .responseSerializationException(let exception):
+            return exception.errorDescription
+        case .executeException(let exception):
+            return exception.errorDescription
         }
     }
 }
 
-extension PGSpiError.ParameterEncodingFailureReason: LocalizedError {
+extension PGSpiError.RequestException: LocalizedError {
+    public var status: Int? {
+        switch self {
+        case .networkException:
+            return -1001
+        case .invalidURL:
+            return -1002
+        default:
+            return -1000
+        }
+    }
+    
+    public var message: String? {
+        switch self {
+        case .networkException( _):
+            return "网络异常，请稍后重试！"
+        case .invalidURL:
+            return "请求异常"
+        default:
+            return nil
+        }
+    }
+
     public var errorDescription: String? {
         switch self {
-        case .missingURL:
-            return "Missing url"
-        case .jsonEncodingFailed(let error):
-            return "Parameter Json Encoding Failed:\(error.localizedDescription)"
+        case .networkException(let error):
+            return "NetWork Exception:\(error?.localizedDescription)"
+        case .invalidURL(let baseURL, let path):
+            return "Url Exception: \(baseURL)\(path)"
         }
     }
 }
 
-extension PGSpiError.ResponseSerializationFailureReason: LocalizedError {
+extension PGSpiError.ResponseSerializationException: LocalizedError {
     public var errorDescription: String? {
         switch self {
-        case .dataIsNil:
-            return "The data in response was nil"
+        case .dataNotFound:
+            return "The data in response was not found"
         case .jsonSerializationFailed(let error):
-            return "Response Serialization Failed: \(error.localizedDescription)"
-        case .jsonIsNotADictionary:
-            return "The Serialization Result is not a Dictionary"
-        case .dataLengthIsZero:
-            return "The return data length was zero"
+            return "Response Serialization Failed: \(error?.localizedDescription)"
         case .objectFailed:
             return "The Serialization Result is not a Object"
         }
     }
 }
 
-extension PGSpiError.ResponseValidationFailureReason: LocalizedError {
+extension PGSpiError.ResponseException: LocalizedError {
+    public var status: Int? {
+        switch self {
+        case .serverException:
+            return -2001
+        case .notFound:
+            return -2002
+        case .unacceptableContentType:
+            return -2003
+        case .unacceptableStatusCode(let code):
+            return code
+        }
+    }
+    
+    public var message: String? {
+        switch self {
+        case .serverException:
+            return "服务器异常，请稍后重试！"
+        case .notFound:
+            return "请求异常"
+        case .unacceptableContentType:
+            return "请求异常"
+        case .unacceptableStatusCode(let code):
+            return "请求异常"
+        }
+    }
     public var localizedDescription: String {
         switch self {
-        case .dataFileNil:
-            return "Response could not be validated, data file was nil."
-        case .dataFileReadFailed(let url):
-            return "Response could not be validated, data file could not be read: \(url)."
-        case .missingContentType(let types):
-            return (
-                "Response Content-Type was missing and acceptable content types " +
-                    "(\(types.joined(separator: ","))) do not match \"*/*\"."
-            )
+        case .serverException:
+            return "Server could not be access."
+        case .notFound:
+            return "The method could not be found."
         case .unacceptableContentType(let acceptableTypes, let responseType):
             return (
                 "Response Content-Type \"\(responseType)\" does not match any acceptable types: " +
@@ -235,11 +267,13 @@ extension PGSpiError.ResponseValidationFailureReason: LocalizedError {
     }
 }
 
-extension PGSpiError.ExecuteFailureReason: LocalizedError {
+extension PGSpiError.ExecuteException: LocalizedError {
     public var status: Int? {
         switch self {
         case .executeFail(let code, _):
             return code
+        case .unlegal:
+            return -3001
         default:
             return nil
         }
@@ -258,7 +292,7 @@ extension PGSpiError.ExecuteFailureReason: LocalizedError {
         switch self {
         case .executeFail(_, let msg):
             if let info = msg {
-                if info.count <= 0 {
+                if info.count != PGSpiManager.config.result_key.success_key {
                     return "操作异常，请稍后重试"
                 }
             }
