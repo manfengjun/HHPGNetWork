@@ -30,10 +30,10 @@ class ViewController: UIViewController {
 //        }).disposed(by: disposeBag)
         PGSpi(Common.getAllRegion).observable().mapSpiObjects(to: AppInfo.self).subscribe(onNext: { (response) in
             switch response {
-            case .failure(let error):
-                print(error.localizedDescription)
             case .success(let success):
                 print(success.count)
+            case .failure(let error):
+                print(error.message ?? "")
             }
         })
         

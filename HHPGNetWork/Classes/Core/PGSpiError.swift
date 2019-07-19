@@ -6,17 +6,8 @@
 //
 
 import Foundation
-/// Bat 请求过程中出现的错误
-///
-/// - invalidURL:   构造URL失败或生成的为无效的URL
-///     - baseURL:  构造URL的基地址
-///     - path:     URL请求路径
-/// - parameterEncodingFalied:  参数编码过程中出现的错误
-/// - responseValidationFailed: 当`validate（）`调用失败时返回
-/// - responseSerializationFailed: 响应序列化程序在序列化过程中遇到错误时返回
-/// - responseCodableFailed: 响应结果编码错误
+
 public enum PGSpiError: Error {
-    
     /// 连接异常
     ///
     /// - networkException: 网络异常
@@ -144,8 +135,8 @@ extension PGSpiError: LocalizedError {
             return exception.status
         case .executeException(let exception):
             return exception.status
-        default:
-            return nil
+        case .responseSerializationException(let exception):
+            return exception.status
         }
     }
 
@@ -157,8 +148,8 @@ extension PGSpiError: LocalizedError {
             return exception.message
         case .executeException(let exception):
             return exception.message
-        default:
-            return "服务器异常，请稍后再试!"
+        case .responseSerializationException(let exception):
+            return exception.message
         }
     }
 
@@ -177,22 +168,17 @@ extension PGSpiError: LocalizedError {
 }
 
 extension PGSpiError.RequestException: LocalizedError {
-    public var status: Int? {
+    public var status: Int {
         switch self {
         case .networkException:
-            return -1001
+            return 10001
         case .invalidURL:
-            return -1002
+            return 10002
         }
     }
     
     public var message: String? {
-        switch self {
-        case .networkException( _):
-            return "网络异常，请稍后重试！"
-        case .invalidURL:
-            return "请求异常"
-        }
+        return SpiCode[status]?.msg ?? ""
     }
 
     public var errorDescription: String? {
@@ -206,6 +192,20 @@ extension PGSpiError.RequestException: LocalizedError {
 }
 
 extension PGSpiError.ResponseSerializationException: LocalizedError {
+    public var status: Int {
+        switch self {
+        case .dataNotFound:
+            return 10006
+        case .jsonSerializationFailed:
+            return 10007
+        case .objectFailed:
+            return 10008
+        }
+    }
+    
+    public var message: String? {
+        return SpiCode[status]?.msg ?? ""
+    }
     public var errorDescription: String? {
         switch self {
         case .dataNotFound:
@@ -219,30 +219,21 @@ extension PGSpiError.ResponseSerializationException: LocalizedError {
 }
 
 extension PGSpiError.ResponseException: LocalizedError {
-    public var status: Int? {
+    public var status: Int {
         switch self {
         case .serverException:
-            return -2001
+            return 10003
         case .notFound:
-            return -2002
+            return 10004
         case .unacceptableContentType:
-            return -2003
+            return 10005
         case .unacceptableStatusCode(let code):
             return code
         }
     }
     
     public var message: String? {
-        switch self {
-        case .serverException:
-            return "服务器异常，请稍后重试！"
-        case .notFound:
-            return "请求异常"
-        case .unacceptableContentType:
-            return "请求异常"
-        case .unacceptableStatusCode:
-            return "请求异常"
-        }
+        return SpiCode[status]?.msg ?? ""
     }
     public var localizedDescription: String {
         switch self {
@@ -262,12 +253,12 @@ extension PGSpiError.ResponseException: LocalizedError {
 }
 
 extension PGSpiError.ExecuteException: LocalizedError {
-    public var status: Int? {
+    public var status: Int {
         switch self {
         case .executeFail(let code, _):
             return code
         case .unlegal:
-            return -3001
+            return 10009
         }
     }
 
@@ -275,8 +266,8 @@ extension PGSpiError.ExecuteException: LocalizedError {
         switch self {
         case .executeFail(_, let msg):
             return msg
-        default:
-            return nil
+        case .unlegal:
+            return SpiCode[status]?.msg ?? ""
         }
     }
 
@@ -294,3 +285,17 @@ extension PGSpiError.ExecuteException: LocalizedError {
         }
     }
 }
+let SpiCode: [Int: (status: Int, msg: String)] = [
+    // App级区别码10000
+    10000: (status: 10000, msg: "网络异常，请稍后重试！"),
+    /// 登陆注册区别码10001
+    10001: (status: 10001, msg: "请求地址异常"),
+    10002: (status: 10002, msg: "服务器异常，请稍后重试！"),
+    10003: (status: 10003, msg: "接口未找到"),
+    10004: (status: 10004, msg: "Content-Type异常"),
+    10005: (status: 10005, msg: "返回状态异常"),
+    10006: (status: 10006, msg: "没有data字段"),
+    10007: (status: 10007, msg: "JSON序列化异常"),
+    10008: (status: 10007, msg: "对象序列化异常"),
+    10009: (status: 10009, msg: "执行结果不合法,没有状态字段"),
+]
