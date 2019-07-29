@@ -14,11 +14,19 @@ public extension PGSpi {
     /// JSON(未处理)
     ///
     /// - Parameter completion:
-    public func responseJSON(completion: @escaping (_ result: Result<Any, PGSpiError>) -> Void) {
+    func responseJSON(completion: @escaping (_ result: Result<Any, PGSpiError>) -> Void) {
         asProvider().request(self) { (response) in
             switch response.result {
             case .success(let value):
-                completion(.success(value))
+                do {
+                    let json = try value.JSON()
+                    completion(.success(json))
+                } catch(let error) {
+                    if error is PGSpiError {
+                        completion(.failure(error as! PGSpiError))
+                    }
+                    completion(.failure(PGSpiError.responseSerializationException(exception: .jsonSerializationFailed(error))))
+                }
             case .failure(let error):
                 if error is PGSpiError {
                     completion(.failure(error as! PGSpiError))
@@ -30,12 +38,12 @@ public extension PGSpi {
     /// JSON
     ///
     /// - Parameter completion:
-    public func responseSpiJSON(completion: @escaping (_ result: Result<Any, PGSpiError>) -> Void) {
+    func responseSpiJSON(completion: @escaping (_ result: Result<Any, PGSpiError>) -> Void) {
         asProvider().request(self) { (response) in
             switch response.result {
             case .success(let value):
                 do {
-                    let json = try value.mapJSON()
+                    let json = try value.mapSpiJSON()
                     completion(.success(json))
                 } catch(let error) {
                     if error is PGSpiError {
@@ -57,7 +65,7 @@ public extension PGSpi {
     /// - Parameters:
     ///   - designatedPath: 解析路径
     ///   - completion:
-    public func responseSpiObject<T: HandyJSON>(designatedPath: String? = nil, completion: @escaping (_ result: Result<T, PGSpiError>) -> Void) -> Void {
+    func responseSpiObject<T: HandyJSON>(designatedPath: String? = nil, completion: @escaping (_ result: Result<T, PGSpiError>) -> Void) -> Void {
         asProvider().request(self) { (response) in
             switch response.result {
             case .success(let value):
@@ -84,7 +92,7 @@ public extension PGSpi {
     /// - Parameters:
     ///   - designatedPath: 解析路径
     ///   - completion:
-    public func responseSpiObjects<T: HandyJSON>(designatedPath: String? = nil, completion: @escaping (_ result: Result<[T], PGSpiError>) -> Void) -> Void {
+    func responseSpiObjects<T: HandyJSON>(designatedPath: String? = nil, completion: @escaping (_ result: Result<[T], PGSpiError>) -> Void) -> Void {
         asProvider().request(self) { (response) in
             switch response.result {
             case .success(let value):
