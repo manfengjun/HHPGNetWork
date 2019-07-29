@@ -28,14 +28,14 @@ class ViewController: UIViewController {
 //        }, onError: { (error) in
 //            print(error.localizedDescription)
 //        }).disposed(by: disposeBag)
-        PGSpi(Common.getAllRegion).observable().mapSpiObjects(to: AppInfo.self).subscribe(onNext: { (response) in
-            switch response {
-            case .success(let success):
-                print(success.count)
-            case .failure(let error):
-                print(error.message ?? "")
-            }
-        })
+//        PGSpi(Common.getAllRegion).observable().mapSpiObjects(to: AppInfo.self).subscribe(onNext: { (response) in
+//            switch response {
+//            case .success(let success):
+//                print(success.count)
+//            case .failure(let error):
+//                print(error.message ?? "")
+//            }
+//        })
         
 //        mapSpiObjects(to: AppInfo.self).subscribe(onSuccess: { (value) in
 //            print(value)
@@ -43,19 +43,17 @@ class ViewController: UIViewController {
 //            print(error.localizedDescription)
 //        }.disposed(by: disposeBag)
         
-//        // 流请求示例
-//        PGSpi(Common.getAllRegion).send { (response) in
-//            switch response.result {
-//            case .success(let value):
-//                do {
-//                    let repos = try value.mapJSON()
-//                } catch(let error) {
-//                    print(error.localizedDescription)
-//                }
-//            case .failure(let error):
-//                print(error.handle().message)
-//            }
-//        }
+        // 流请求示例
+        PGSpi(Common.getAllRegion).responseSpiObjects { (response:Result<[AppInfo], PGSpiError>) in
+            switch response {
+            case .success(let value):
+                print(value.count)
+            case .failure(let error):
+                print(error.message ?? "")
+            }
+        }
+        
+        
     }
     
     

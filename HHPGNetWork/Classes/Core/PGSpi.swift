@@ -5,9 +5,9 @@
 //  Created by ios on 2019/6/13.
 //
 
-import Alamofire
 import Moya
 import UIKit
+import Result
 private let requestClosure = { (endpoint: Endpoint, done: @escaping MoyaProvider<PGSpi>.RequestResultClosure) in
     do {
         var request = try endpoint.urlRequest()
@@ -17,7 +17,7 @@ private let requestClosure = { (endpoint: Endpoint, done: @escaping MoyaProvider
         return
     }
 }
-
+public typealias Completion = (_ result: Result<Moya.Response, Error>) -> Void
 public class PGSpi: NSObject {
     public let target: PGSpiTarget
     let provider = MoyaProvider<PGSpi>(requestClosure: requestClosure, plugins: [PGSpiLogger()])
@@ -26,13 +26,11 @@ public class PGSpi: NSObject {
     }
     
     // MARK: - 发送请求
-    
-    public func send(completion: @escaping Completion) {
-        let PGSpiProvider = target.logEnable ? provider.log : provider
-        PGSpiProvider.request(self, completion: completion)
+    func asProvider() -> MoyaProvider<PGSpi> {
+        return target.logEnable ? provider.log : provider
     }
+    
 }
-
 extension PGSpi: TargetType {
     public var sampleData: Data {
         return "{}".data(using: String.Encoding.utf8)!
@@ -49,7 +47,6 @@ extension PGSpi: TargetType {
     public var method: Moya.Method {
         return target.method
     }
-    
     public var headers: [String: String]? {
         return target.headers
     }
