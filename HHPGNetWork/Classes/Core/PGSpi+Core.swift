@@ -11,6 +11,22 @@ import HandyJSON
 
 public extension PGSpi {
     
+    /// JSON(未处理)
+    ///
+    /// - Parameter completion:
+    public func responseJSON(completion: @escaping (_ result: Result<Any, PGSpiError>) -> Void) {
+        asProvider().request(self) { (response) in
+            switch response.result {
+            case .success(let value):
+                completion(.success(value))
+            case .failure(let error):
+                if error is PGSpiError {
+                    completion(.failure(error as! PGSpiError))
+                }
+                completion(.failure(PGSpiError.requestException(exception: .networkException(nil))))
+            }
+        }
+    }
     /// JSON
     ///
     /// - Parameter completion:
