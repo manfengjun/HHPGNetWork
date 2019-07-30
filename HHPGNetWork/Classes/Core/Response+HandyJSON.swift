@@ -11,7 +11,7 @@ import UIKit
 // MARK: - JSON JSONSerialization 过滤 Code
 
 public extension Response {
-    func mapSpiJSON() throws -> Any {
+    func JSON() throws -> Any {
         if emptyDataStatusCodes.contains(statusCode) {
             return [:]
         }
@@ -28,13 +28,33 @@ public extension Response {
             throw PGSpiError.executeException(exception: .executeFail(code: status, msg: json[PGSpiManager.config.result_key.msg_key] as? String))
         }
     }
+    func mapSpiJSON() throws -> Any {
+        if emptyDataStatusCodes.contains(statusCode) {
+            return [:]
+        }
+        let jsonData = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+        guard let json = jsonData as? [String: Any] else {
+            throw PGSpiError.responseSerializationException(exception: PGSpiError.ResponseSerializationException.jsonSerializationFailed(nil))
+        }
+        if let status = json[PGSpiManager.config.result_key.code_key] as? Int, status == PGSpiManager.config.result_key.success_key {
+            if let data = json[PGSpiManager.config.result_key.data_key] {
+                return data
+            }
+            return ""
+        } else {
+            guard let status = json[PGSpiManager.config.result_key.code_key] as? Int else {
+                throw PGSpiError.executeException(exception: .unlegal)
+            }
+            throw PGSpiError.executeException(exception: .executeFail(code: status, msg: json[PGSpiManager.config.result_key.msg_key] as? String))
+        }
+    }
 }
 
 // MARK: - Object: HandyJSON
 
 public extension Response {
     func mapSpiObject<T: HandyJSON>(_ type: T.Type, designatedPath: String? = nil) throws -> T {
-        let json = try mapSpiJSON()
+        let json = try JSON()
         guard let value = json as? [String: Any] else {
             throw PGSpiError.responseSerializationException(exception: .jsonSerializationFailed(nil))
         }
@@ -62,7 +82,7 @@ public extension Response {
 
 public extension Response {
     func mapSpiObjects<T: HandyJSON>(_ type: T.Type, designatedPath: String? = nil) throws -> [T] {
-        let json = try mapSpiJSON()
+        let json = try JSON()
         guard let value = json as? [String: Any] else {
             throw PGSpiError.responseSerializationException(exception: PGSpiError.ResponseSerializationException.jsonSerializationFailed(nil))
         }

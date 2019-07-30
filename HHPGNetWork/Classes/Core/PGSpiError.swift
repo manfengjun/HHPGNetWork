@@ -275,7 +275,7 @@ extension PGSpiError.ExecuteException: LocalizedError {
         switch self {
         case .executeFail(_, let msg):
             if let info = msg {
-                if info.count != PGSpiManager.config.result_key.success_key {
+                if info.count == 0 {
                     return "操作异常，请稍后重试"
                 }
             }
@@ -296,6 +296,6 @@ let SpiCode: [Int: (status: Int, msg: String)] = [
     10005: (status: 10005, msg: "返回状态异常"),
     10006: (status: 10006, msg: "没有data字段"),
     10007: (status: 10007, msg: "JSON序列化异常"),
-    10008: (status: 10007, msg: "对象序列化异常"),
+    10008: (status: 10008, msg: "对象序列化异常"),
     10009: (status: 10009, msg: "执行结果不合法,没有状态字段"),
 ]

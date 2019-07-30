@@ -25,13 +25,13 @@ public extension PGSpi {
                     if error is PGSpiError {
                         completion(.failure(error as! PGSpiError))
                     }
-                    completion(.failure(PGSpiError.responseSerializationException(exception: .jsonSerializationFailed(error))))
+                    else {
+                        completion(.failure(PGSpiError.responseSerializationException(exception: .jsonSerializationFailed(error))))
+                    }
+                    
                 }
             case .failure(let error):
-                if error is PGSpiError {
-                    completion(.failure(error as! PGSpiError))
-                }
-                completion(.failure(PGSpiError.requestException(exception: .networkException(nil))))
+                completion(.failure(PGSpiError.requestException(exception: .networkException(error))))
             }
         }
     }
@@ -49,13 +49,11 @@ public extension PGSpi {
                     if error is PGSpiError {
                         completion(.failure(error as! PGSpiError))
                     }
-                    completion(.failure(PGSpiError.responseSerializationException(exception: .jsonSerializationFailed(error))))
-                }
+                    else {
+                        completion(.failure(PGSpiError.responseSerializationException(exception: .jsonSerializationFailed(error))))
+                    }                }
             case .failure(let error):
-                if error is PGSpiError {
-                    completion(.failure(error as! PGSpiError))
-                }
-                completion(.failure(PGSpiError.requestException(exception: .networkException(nil))))
+                completion(.failure(PGSpiError.requestException(exception: .networkException(error))))
             }
         }
     }
@@ -76,13 +74,12 @@ public extension PGSpi {
                     if error is PGSpiError {
                         completion(.failure(error as! PGSpiError))
                     }
-                    completion(.failure(PGSpiError.responseSerializationException(exception: .jsonSerializationFailed(error))))
+                    else {
+                        completion(.failure(PGSpiError.responseSerializationException(exception: .jsonSerializationFailed(error))))
+                    }
                 }
             case .failure(let error):
-                if error is PGSpiError {
-                    completion(.failure(error as! PGSpiError))
-                }
-                completion(.failure(PGSpiError.requestException(exception: .networkException(nil))))
+                completion(.failure(PGSpiError.requestException(exception: .networkException(error))))
             }
         }
     }
@@ -103,13 +100,13 @@ public extension PGSpi {
                     if error is PGSpiError {
                         completion(.failure(error as! PGSpiError))
                     }
-                    completion(.failure(PGSpiError.responseSerializationException(exception: .jsonSerializationFailed(error))))
+                    else {
+                        completion(.failure(PGSpiError.responseSerializationException(exception: .jsonSerializationFailed(error))))
+                    }
+                    
                 }
             case .failure(let error):
-                if error is PGSpiError {
-                    completion(.failure(error as! PGSpiError))
-                }
-                completion(.failure(PGSpiError.requestException(exception: .networkException(nil))))
+                completion(.failure(PGSpiError.requestException(exception: .networkException(error))))
             }
         }
     }
