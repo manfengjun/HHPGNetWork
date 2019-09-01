@@ -29,4 +29,16 @@ public extension PGSpi {
         }
         return observable
     }
+    
+    /// RxSwift 请求
+    ///
+    /// - Parameter activityIndicator: 请求状态
+    /// - Returns: Observable<Response>
+    func driver(_ activityIndicator: ActivityIndicator? = nil) -> Driver<Response> {
+        let observable = provider.rx.request(self).asObservable()
+        if let activityIndicator = activityIndicator {
+            return observable.trackActivity(activityIndicator).asDriver(onErrorJustReturn: Response(statusCode: -1, data: Data()))
+        }
+        return observable.asDriver(onErrorJustReturn: Response(statusCode: -1, data: Data()))
+    }
 }

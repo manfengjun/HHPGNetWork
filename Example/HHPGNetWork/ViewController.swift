@@ -10,8 +10,11 @@ import UIKit
 import HHPGNetWork
 import Moya
 import RxSwift
+import RxCocoa
 let disposeBag = DisposeBag()
+
 class ViewController: UIViewController {
+    @IBOutlet weak var login: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
         // 初始化 网络库设置
@@ -21,13 +24,18 @@ class ViewController: UIViewController {
                                                           data: "data",
                                                           success: 200))
 
-//        // RxSwift请求示例
-//        Observable.just(1).flatMap { _ in PGSpi(Common.getAllRegion).observable()}.mapSpiObjects(to: AppInfo.self).subscribe(onNext: { (value) in
-//            print(value.count)
-//            print(value[0].toJSONString())
-//        }, onError: { (error) in
-//            print(error.localizedDescription)
-//        }).disposed(by: disposeBag)
+        // RxSwift请求示例
+        login.rx.tap.asDriver().flatMap { _ in PGSpi(Common.getAllRegion).driver()}.mapSpiObjects(to: AppInfo.self).drive(onNext: { (response) in
+            switch response {
+            case .success(let success):
+                print(success.count)
+            case .failure(let error):
+                print(error.message ?? "")
+            }
+        }, onCompleted: {
+            print("234234")
+        }).disposed(by: disposeBag)
+        
 //        PGSpi(Common.getAllRegion).observable().mapSpiObjects(to: AppInfo.self).subscribe(onNext: { (response) in
 //            switch response {
 //            case .success(let success):
@@ -43,15 +51,15 @@ class ViewController: UIViewController {
 //            print(error.localizedDescription)
 //        }.disposed(by: disposeBag)
         
-        // 流请求示例
-        PGSpi(Common.getAllRegion).responseSpiObjects { (response:Result<[AppInfo], PGSpiError>) in
-            switch response {
-            case .success(let value):
-                print(value.count)
-            case .failure(let error):
-                print(error.message ?? "")
-            }
-        }
+//        // 流请求示例
+//        PGSpi(Common.getAllRegion).responseSpiObjects { (response:Result<[AppInfo], PGSpiError>) in
+//            switch response {
+//            case .success(let value):
+//                print(value.count)
+//            case .failure(let error):
+//                print(error.message ?? "")
+//            }
+//        }
         
         
     }
