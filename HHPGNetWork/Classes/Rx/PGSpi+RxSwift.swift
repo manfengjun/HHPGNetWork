@@ -18,9 +18,9 @@ public extension PGSpi {
         return provider.rx.request(self)
     }
     
-    /// RxSwift 请求
+    /// RxSwift
     ///
-    /// - Parameter activityIndicator: 请求状态
+    /// - Parameter activityIndicator: ActivityIndicator
     /// - Returns: Observable<Response>
     func observable(_ activityIndicator: ActivityIndicator? = nil) -> Observable<Response> {
         let observable = provider.rx.request(self).asObservable()
@@ -30,10 +30,9 @@ public extension PGSpi {
         return observable
     }
     
-    /// RxSwift 请求
-    ///
-    /// - Parameter activityIndicator: 请求状态
-    /// - Returns: Observable<Response>
+    /// RxSwift
+    /// - Parameter activityIndicator: ActivityIndicator
+    /// - Returns: Driver<Response>
     func driver(_ activityIndicator: ActivityIndicator? = nil) -> Driver<Response> {
         let observable = provider.rx.request(self).asObservable()
         if let activityIndicator = activityIndicator {
