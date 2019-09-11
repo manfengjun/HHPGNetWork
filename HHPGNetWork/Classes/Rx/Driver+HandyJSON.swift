@@ -23,7 +23,7 @@ public extension Driver where E == Response {
                 if error is PGSpiError {
                     return Driver.just(Result<Any, PGSpiError>.failure(error as! PGSpiError))
                 } else {
-                    return Driver.just(Result<Any, PGSpiError>.failure(PGSpiError.responseSerializationException(exception: .jsonSerializationFailed(error))))
+                    return Driver.just(Result<Any, PGSpiError>.failure(PGSpiError.responseException(exception: PGSpiError.ResponseException.serverException)))
                 }
             }
         }
@@ -42,7 +42,7 @@ public extension Driver where E == Response {
                 if error is PGSpiError {
                     return Driver.just(Result<T, PGSpiError>.failure(error as! PGSpiError))
                 } else {
-                    return Driver.just(Result<T, PGSpiError>.failure(PGSpiError.responseSerializationException(exception: .jsonSerializationFailed(error))))
+                    return Driver.just(Result<T, PGSpiError>.failure(PGSpiError.responseException(exception: PGSpiError.ResponseException.serverException)))
                 }
             }
         }
@@ -61,7 +61,7 @@ public extension Driver where E == Response {
                 if error is PGSpiError {
                     return Driver.just(Result<[T], PGSpiError>.failure(error as! PGSpiError))
                 } else {
-                    return Driver.just(Result<[T], PGSpiError>.failure(PGSpiError.responseSerializationException(exception: .jsonSerializationFailed(error))))
+                    return Driver.just(Result<[T], PGSpiError>.failure(PGSpiError.responseException(exception: PGSpiError.ResponseException.serverException)))
                 }
             }
         }
