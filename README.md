@@ -22,7 +22,9 @@ PGSpiManager.config.setConfig(baseUrls: ["https://api.apiopen.top"],
                                                       data: "data1",
                                                       success: 200))
 ```
-### RxSwift请求
+
+### RxSwift 请求
+
 ```
 _ = PGSpi(Common.getAllRegion).rxSend().mapSpiObjects(to: AppInfo.self).subscribe(onSuccess: { (value) in
         print(value.count)
@@ -31,7 +33,9 @@ _ = PGSpi(Common.getAllRegion).rxSend().mapSpiObjects(to: AppInfo.self).subscrib
         print(error.localizedDescription)
     }.disposed(by: disposeBag)
 ```
+
 ### 流请求
+
 ```
 PGSpi(Common.getAllRegion).send { (response) in
     switch response.result {
@@ -46,6 +50,7 @@ PGSpi(Common.getAllRegion).send { (response) in
     }
 }
 ```
+
 ## 作者
 
 chinafengjun@gmail.com

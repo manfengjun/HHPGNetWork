@@ -171,9 +171,9 @@ extension PGSpiError.RequestException: LocalizedError {
     public var status: Int {
         switch self {
         case .networkException:
-            return 10001
-        case .invalidURL:
             return 10002
+        case .invalidURL:
+            return 10001
         }
     }
     

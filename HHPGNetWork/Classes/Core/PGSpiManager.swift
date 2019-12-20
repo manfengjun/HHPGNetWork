@@ -44,13 +44,13 @@ public class PGSpiManager {
         }
     }
     
-    /// 重试次数
-    public var repeatNum: Int = 2
-    
-    /// 轮询次数
-    public var retryNum: Int {
-        return self.repeatNum * PGSpiManager.config.baseUrls.count
-    }
+//    /// 重试次数
+//    public var repeatNum: Int = 2
+//    
+//    /// 轮询次数
+//    public var retryNum: Int {
+//        return self.repeatNum * PGSpiManager.config.baseUrls.count
+//    }
     
     /// 当前数组位置
     private var index: Int = 0
