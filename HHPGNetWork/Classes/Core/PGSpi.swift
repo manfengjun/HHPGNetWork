@@ -8,6 +8,7 @@
 import Moya
 import UIKit
 import Result
+
 private let requestClosure = { (endpoint: Endpoint, done: @escaping MoyaProvider<PGSpi>.RequestResultClosure) in
     do {
         var request = try endpoint.urlRequest()

@@ -44,14 +44,6 @@ public class PGSpiManager {
         }
     }
     
-//    /// 重试次数
-//    public var repeatNum: Int = 2
-//    
-//    /// 轮询次数
-//    public var retryNum: Int {
-//        return self.repeatNum * PGSpiManager.config.baseUrls.count
-//    }
-    
     /// 当前数组位置
     private var index: Int = 0
     /// 基础地址
@@ -60,14 +52,6 @@ public class PGSpiManager {
             return PGSpiManager.config.baseUrls[self.index % PGSpiManager.config.baseUrls.count]
         } else {
             return ""
-        }
-    }
-    
-    func getNext() {
-        if self.index < PGSpiManager.config.baseUrls.count * self.repeatNum {
-            self.index = self.index + 1
-        } else {
-            self.index = 0
         }
     }
 }
