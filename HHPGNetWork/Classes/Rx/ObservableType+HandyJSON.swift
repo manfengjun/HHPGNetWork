@@ -13,7 +13,7 @@ import Moya
 import RxSwift
 
 /// Extension for processing Responses into Mappable objects through ObjectMapper
-public extension ObservableType where E == Response {
+public extension ObservableType where Element == Response {
     /// JSON JSONSerialization 过滤 Code
     ///
     /// - Returns: Any

@@ -11,7 +11,7 @@ import Moya
 import RxCocoa
 import RxSwift
 
-public extension Driver where E == Response {
+public extension Driver where Element == Response {
     /// JSON JSONSerialization 过滤 Code
     ///
     /// - Returns: Any

@@ -10,7 +10,7 @@ import Moya
 import RxSwift
 import UIKit
 
-public extension PrimitiveSequence where TraitType == SingleTrait, ElementType == Response {
+public extension PrimitiveSequence where Trait == SingleTrait, Element == Response {
     /// JSON JSONSerialization 过滤 Code
     ///
     /// - Returns: Any
