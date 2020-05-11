@@ -16,7 +16,7 @@ public extension PGSpi {
     /// - Parameter completion:
     func responseJSON(completion: @escaping (_ result: Result<Any, PGSpiError>) -> Void) {
         asProvider().request(self) { (response) in
-            switch response.result {
+            switch response {
             case .success(let value):
                 do {
                     let json = try value.JSON()
@@ -40,7 +40,7 @@ public extension PGSpi {
     /// - Parameter completion:
     func responseSpiJSON(completion: @escaping (_ result: Result<Any, PGSpiError>) -> Void) {
         asProvider().request(self) { (response) in
-            switch response.result {
+            switch response {
             case .success(let value):
                 do {
                     let json = try value.mapSpiJSON()
@@ -65,7 +65,7 @@ public extension PGSpi {
     ///   - completion:
     func responseSpiObject<T: HandyJSON>(designatedPath: String? = nil, completion: @escaping (_ result: Result<T, PGSpiError>) -> Void) -> Void {
         asProvider().request(self) { (response) in
-            switch response.result {
+            switch response {
             case .success(let value):
                 do {
                     let json = try value.mapSpiObject(T.self, designatedPath: designatedPath)
@@ -91,7 +91,7 @@ public extension PGSpi {
     ///   - completion:
     func responseSpiObjects<T: HandyJSON>(designatedPath: String? = nil, completion: @escaping (_ result: Result<[T], PGSpiError>) -> Void) -> Void {
         asProvider().request(self) { (response) in
-            switch response.result {
+            switch response {
             case .success(let value):
                 do {
                     let json = try value.mapSpiObjects(T.self, designatedPath: designatedPath)

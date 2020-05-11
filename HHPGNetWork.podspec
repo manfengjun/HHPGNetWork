@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'HHPGNetWork'
-  s.version          = '0.2.2'
+  s.version          = '0.2.3'
   s.summary          = 'RxSwift & Alamofire 网络库'
   s.description      = <<-DESC
 TODO: RxSwift封装络请求封， 包含了网络请求，数据解析.
@@ -26,8 +26,8 @@ TODO: RxSwift封装络请求封， 包含了网络请求，数据解析.
   end
   s.subspec 'Rx' do |r|
       r.dependency "HHPGNetWork/Core"
-      r.dependency 'Moya/RxSwift'
-      s.dependency 'RxCocoa'
+      r.dependency 'Moya/RxSwift', '~> 14.0.0'
+      s.dependency 'RxCocoa', '~> 5.1.1'
       r.source_files = 'HHPGNetWork/Classes/Rx/**/*'
   end
   s.dependency 'HandyJSON'

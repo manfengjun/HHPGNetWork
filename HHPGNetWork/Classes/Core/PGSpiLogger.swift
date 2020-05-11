@@ -6,7 +6,6 @@
 //
 
 import Moya
-import Result
 import UIKit
 public class PGSpiLogger: PluginType {
     var logEnable: Bool = false

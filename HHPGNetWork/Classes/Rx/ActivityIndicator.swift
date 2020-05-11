@@ -8,11 +8,11 @@
 
 import Foundation
 #if !RX_NO_MODULE
-    import RxSwift
     import RxCocoa
+    import RxSwift
 #endif
 
-private struct ActivityToken<E> : ObservableConvertibleType, Disposable {
+private struct ActivityToken<E>: ObservableConvertibleType, Disposable {
     private let _source: Observable<E>
     private let _dispose: Cancelable
     
@@ -36,8 +36,12 @@ private struct ActivityToken<E> : ObservableConvertibleType, Disposable {
  If there is at least one sequence computation in progress, `true` will be sent.
  When all activities complete `false` will be sent.
  */
-public class ActivityIndicator : SharedSequenceConvertibleType {
-    public typealias E = Bool
+public class ActivityIndicator: SharedSequenceConvertibleType {
+    public func asSharedSequence() -> SharedSequence<DriverSharingStrategy, Element> {
+        return _loading
+    }
+    
+    public typealias Element = Bool
     public typealias SharingStrategy = DriverSharingStrategy
     
     private let _lock = NSRecursiveLock()
@@ -55,7 +59,7 @@ public class ActivityIndicator : SharedSequenceConvertibleType {
             self.increment()
             return ActivityToken(source: source.asObservable(), disposeAction: self.decrement)
         }) { t in
-            return t.asObservable()
+            t.asObservable()
         }
     }
     
@@ -69,10 +73,6 @@ public class ActivityIndicator : SharedSequenceConvertibleType {
         _lock.lock()
         _variable.accept(_variable.value - 1)
         _lock.unlock()
-    }
-    
-    public func asSharedSequence() -> SharedSequence<SharingStrategy, E> {
-        return _loading
     }
 }
 

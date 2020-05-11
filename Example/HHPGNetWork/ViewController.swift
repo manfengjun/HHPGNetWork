@@ -18,7 +18,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // 初始化 网络库设置
-        PGSpiManager.config.setConfig(baseUrls: ["https://api.apiopen.top"],
+        PGSpiManager.config.setConfig(baseUrls: ["http://v.juhe.cn/toutiao"],
                                     result_key: PGSpiRegKey(code: "code",
                                                           msg: "message",
                                                           data: "data",

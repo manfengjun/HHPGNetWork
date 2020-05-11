@@ -1,44 +1,44 @@
 PODS:
-  - Alamofire (4.8.2)
-  - HandyJSON (5.0.0)
-  - HHPGNetWork (0.1.9):
+  - Alamofire (5.1.0)
+  - HandyJSON (5.0.1)
+  - HHPGNetWork (0.2.3):
     - HandyJSON
-    - HHPGNetWork/Core (= 0.1.9)
-    - HHPGNetWork/Rx (= 0.1.9)
-    - RxCocoa
-  - HHPGNetWork/Core (0.1.9):
+    - HHPGNetWork/Core (= 0.2.3)
+    - HHPGNetWork/Rx (= 0.2.3)
+    - RxCocoa (~> 5.1.1)
+  - HHPGNetWork/Core (0.2.3):
     - HandyJSON
     - Moya
-    - RxCocoa
-  - HHPGNetWork/Rx (0.1.9):
+    - RxCocoa (~> 5.1.1)
+  - HHPGNetWork/Rx (0.2.3):
     - HandyJSON
     - HHPGNetWork/Core
-    - Moya/RxSwift
-    - RxCocoa
-  - Moya (13.0.1):
-    - Moya/Core (= 13.0.1)
-  - Moya/Core (13.0.1):
-    - Alamofire (~> 4.1)
-    - Result (~> 4.1)
-  - Moya/RxSwift (13.0.1):
+    - Moya/RxSwift (~> 14.0.0)
+    - RxCocoa (~> 5.1.1)
+  - Moya (14.0.0):
+    - Moya/Core (= 14.0.0)
+  - Moya/Core (14.0.0):
+    - Alamofire (~> 5.0)
+  - Moya/RxSwift (14.0.0):
     - Moya/Core
-    - RxSwift (~> 4.0)
-  - Result (4.1.0)
-  - RxCocoa (4.5.0):
-    - RxSwift (>= 4.4.2, ~> 4.4)
-  - RxSwift (4.5.0)
+    - RxSwift (~> 5.0)
+  - RxCocoa (5.1.1):
+    - RxRelay (~> 5)
+    - RxSwift (~> 5)
+  - RxRelay (5.1.1):
+    - RxSwift (~> 5)
+  - RxSwift (5.1.1)
 
 DEPENDENCIES:
   - HHPGNetWork (from `../`)
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  trunk:
     - Alamofire
     - HandyJSON
     - Moya
-    - Result
     - RxCocoa
-  trunk:
+    - RxRelay
     - RxSwift
 
 EXTERNAL SOURCES:
@@ -46,14 +46,14 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
-  HandyJSON: 992f2d661716d6a91de82d0056927bc7813b5770
-  HHPGNetWork: fc37f0bdbf34f68953e3dea71ad3dcde5f5fd6ff
-  Moya: f4a4b80ff2f8a4ffc208dfb31cd91636622fee6e
-  Result: bd966fac789cc6c1563440b348ab2598cc24d5c7
-  RxCocoa: cbf70265dc65a981d4ac982e513c10cf23df24a0
-  RxSwift: f172070dfd1a93d70a9ab97a5a01166206e1c575
+  Alamofire: 9d5c5f602928e512395b30950c5984eca840093c
+  HandyJSON: d45b8415c501e3affc59ca9762c1197ff0feb646
+  HHPGNetWork: 5c0a7f202207f236cce3cc610ffab5ea6223d48c
+  Moya: 5b45dacb75adb009f97fde91c204c1e565d31916
+  RxCocoa: 32065309a38d29b5b0db858819b5bf9ef038b601
+  RxRelay: d77f7d771495f43c556cbc43eebd1bb54d01e8e9
+  RxSwift: 81470a2074fa8780320ea5fe4102807cb7118178
 
 PODFILE CHECKSUM: fee734f7353c2d5fabcab169aaf44f9b125120e5
 
-COCOAPODS: 1.8.0.beta.1
+COCOAPODS: 1.9.1

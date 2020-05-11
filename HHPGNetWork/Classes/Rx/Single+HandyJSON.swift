@@ -7,7 +7,6 @@
 
 import HandyJSON
 import Moya
-import Result
 import RxSwift
 import UIKit
 

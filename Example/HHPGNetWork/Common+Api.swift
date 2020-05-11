@@ -17,7 +17,7 @@ enum Common {
 extension Common : PGSpiTarget {
     var path: String {
         switch self {
-        case .getAllRegion: return "/satinApi"
+        case .getAllRegion: return "/index"
             
         }
     }
@@ -29,7 +29,7 @@ extension Common : PGSpiTarget {
     var parameters: [String : Any]? {
         switch self {
         case .getAllRegion:
-            return ["type":1,"page":1]
+            return ["type":"top","key":"8093f06289133b469be6ff7ab6af1aa9"]
             
         }
     }
@@ -38,7 +38,7 @@ extension Common : PGSpiTarget {
         return [:]
     }
     var baseURL: String {
-        return "https://www.apiopen.top"
+        return "https://v.juhe.cn/toutiao"
     }
     
     

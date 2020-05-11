@@ -28,7 +28,7 @@ public class PGSpiManager {
         
         /// 静态方法，设置 Bat 全局配置
         public static func setConfig(baseUrls: [String] = [],
-                                     httpHeaders: HTTPHeaders? = nil,
+                                     httpHeaders: [String: String]? = nil,
                                      startImmediately: Bool = true,
                                      timeoutInterval: TimeInterval = 60,
                                      result_key: PGSpiRegKey? = nil,
