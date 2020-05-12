@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'HHPGNetWork'
-  s.version          = '0.2.3'
+  s.version          = '0.2.4'
   s.summary          = 'RxSwift & Alamofire 网络库'
   s.description      = <<-DESC
 TODO: RxSwift封装络请求封， 包含了网络请求，数据解析.
